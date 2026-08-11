@@ -1,0 +1,156 @@
+/* =========================================================
+   Calculator widget — shared across every /finance/*-calculator/
+   ========================================================= */
+
+.tool{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  margin:28px 0 8px;
+}
+
+.tool-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+@media (max-width: 860px){
+  .tool-grid{ grid-template-columns:1fr; }
+}
+
+/* ---------- inputs side ---------- */
+.tool-inputs{
+  padding:32px;
+  border-right:1px solid var(--line);
+}
+@media (max-width: 860px){
+  .tool-inputs{ border-right:none; border-bottom:1px solid var(--line); }
+}
+
+.field{ margin-bottom:22px; }
+.field:last-child{ margin-bottom:0; }
+
+.field-label{
+  display:flex; align-items:baseline; justify-content:space-between;
+  font-size:.85rem; font-weight:600; color:var(--ink-soft);
+  margin-bottom:8px;
+}
+.field-label .field-value{
+  font-family:var(--font-mono); color:var(--ink); font-size:.95rem;
+}
+
+.field-input-row{
+  display:flex; align-items:center;
+  border:1px solid var(--line); border-radius:var(--radius-sm);
+  overflow:hidden; background:var(--paper);
+}
+.field-input-row .prefix, .field-input-row .suffix{
+  padding:0 12px; color:var(--ink-faint); font-family:var(--font-mono); font-size:.9rem;
+  background:var(--line-soft);
+  align-self:stretch; display:flex; align-items:center;
+}
+.field-input-row input[type="number"]{
+  border:none; background:none; padding:11px 10px; font-size:1rem;
+  width:100%; color:var(--ink);
+}
+.field-input-row input[type="number"]:focus{ outline:none; }
+.field-input-row:focus-within{ border-color:var(--teal); }
+
+input[type="range"]{
+  width:100%; margin-top:10px; accent-color:var(--teal); cursor:pointer;
+}
+
+.currency-toggle{
+  display:flex; gap:6px; margin-bottom:24px;
+  flex-wrap:wrap;
+}
+.currency-toggle button{
+  font-family:var(--font-mono); font-size:.78rem;
+  border:1px solid var(--line); background:var(--paper); color:var(--ink-soft);
+  padding:5px 10px; border-radius:999px; cursor:pointer;
+}
+.currency-toggle button.active{
+  background:var(--ink); color:#fff; border-color:var(--ink);
+}
+
+/* ---------- results side ---------- */
+.tool-results{
+  padding:32px;
+  background:linear-gradient(180deg, var(--surface) 0%, #FAFBFC 100%);
+}
+
+.headline-stat{
+  margin-bottom:22px;
+}
+.headline-stat .stat-label{
+  font-size:.8rem; text-transform:uppercase; letter-spacing:.06em;
+  color:var(--ink-faint); font-weight:600;
+}
+.headline-stat .stat-value{
+  font-size:2.4rem; font-weight:600; color:var(--ink);
+  line-height:1.1; margin-top:4px;
+}
+
+.stat-row{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 0; border-top:1px solid var(--line-soft);
+  font-size:.92rem;
+}
+.stat-row .stat-label{ color:var(--ink-soft); }
+.stat-row .stat-value{ font-family:var(--font-mono); font-weight:600; color:var(--ink); }
+.stat-row.interest .stat-value{ color:var(--brass); }
+.stat-row.principal .stat-value{ color:var(--teal); }
+
+/* ---------- the Roofline chart ---------- */
+.roofline{
+  margin-top:26px;
+}
+.roofline-head{
+  display:flex; justify-content:space-between; align-items:baseline;
+  margin-bottom:10px;
+}
+.roofline-head .rl-title{
+  font-family:var(--font-display); font-size:1.02rem; font-weight:600; color:var(--ink);
+}
+.roofline-head .rl-sub{ font-size:.78rem; color:var(--ink-faint); }
+
+.roofline-chart{
+  width:100%; height:auto; display:block;
+  background:var(--paper);
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius-sm);
+}
+.roofline-legend{
+  display:flex; gap:18px; margin-top:10px; font-size:.8rem; color:var(--ink-soft);
+}
+.roofline-legend span{ display:inline-flex; align-items:center; gap:6px; }
+.legend-swatch{ width:10px; height:10px; border-radius:2px; display:inline-block; }
+.legend-swatch.principal{ background:var(--teal); }
+.legend-swatch.interest{ background:var(--brass); }
+
+/* ---------- content sections below the tool ---------- */
+.formula-box{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:3px solid var(--brass);
+  border-radius:var(--radius-sm);
+  padding:18px 20px;
+  font-family:var(--font-mono);
+  font-size:.95rem;
+  color:var(--ink);
+  overflow-x:auto;
+  margin:16px 0;
+}
+
+.worked-example table{
+  width:100%; border-collapse:collapse; margin:16px 0; font-size:.92rem;
+}
+.worked-example th, .worked-example td{
+  text-align:left; padding:10px 12px; border-bottom:1px solid var(--line-soft);
+}
+.worked-example th{
+  font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase;
+  letter-spacing:.05em; color:var(--ink-faint); font-weight:600;
+}
+.worked-example td.num{ text-align:right; }

@@ -1,0 +1,229 @@
+/* =========================================================
+   calculaters — design system
+   Concept: "The Ledger & The Roofline"
+   A quiet, paper-and-ink financial register, with one signature
+   motif — an amortization curve styled as a roofline — reused
+   across every finance tool to tie the cluster together.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  /* --- color --- */
+  --paper:        #F4F6F8;
+  --surface:      #FFFFFF;
+  --ink:          #16233A;
+  --ink-soft:     #4A5A72;
+  --ink-faint:    #8896A8;
+  --line:         #D8DEE4;
+  --line-soft:    #E7ECF0;
+  --brass:        #C08A2E;   /* interest / attention */
+  --brass-soft:   #F1E3C6;
+  --teal:         #1F6F63;   /* principal / trust */
+  --teal-soft:    #DCEAE7;
+  --danger:       #B3452F;
+
+  /* --- type --- */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, monospace;
+
+  /* --- scale --- */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 2px rgba(22,35,58,0.04), 0 8px 24px rgba(22,35,58,0.06);
+  --max-w: 1120px;
+}
+
+*, *::before, *::after{ box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{ max-width:100%; display:block; }
+
+a{ color:var(--teal); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+h1,h2,h3{
+  font-family:var(--font-display);
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.15;
+  margin:0 0 .5em;
+}
+h1{ font-size:clamp(1.9rem, 1.4rem + 2vw, 2.75rem); font-weight:500; }
+h2{ font-size:clamp(1.4rem, 1.2rem + 1vw, 1.9rem); }
+h3{ font-size:1.15rem; }
+
+p{ margin:0 0 1em; color:var(--ink-soft); }
+
+.container{
+  max-width:var(--max-w);
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* numbers/data always in mono, everywhere on the site */
+.num, .stat-value, input[type="number"], input[type="range"]{
+  font-family:var(--font-mono);
+}
+
+/* --- skip link / focus --- */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+  outline:2px solid var(--teal);
+  outline-offset:2px;
+}
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--ink); color:#fff; padding:10px 16px; border-radius:0 0 6px 0;
+  z-index:100;
+}
+.skip-link:focus{ left:0; }
+
+/* --- nav --- */
+.site-header{
+  border-bottom:1px solid var(--line);
+  background:var(--surface);
+  position:sticky; top:0; z-index:20;
+}
+.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 20px;
+  max-width:var(--max-w); margin:0 auto;
+}
+.brand{
+  font-family:var(--font-display);
+  font-size:1.3rem;
+  font-weight:600;
+  color:var(--ink);
+  display:flex; align-items:baseline; gap:2px;
+}
+.brand:hover{ text-decoration:none; }
+.brand .brand-dot{ color:var(--brass); }
+
+.nav-links{
+  display:flex; gap:28px; list-style:none; margin:0; padding:0;
+  font-size:.95rem; font-weight:500;
+}
+.nav-links a{ color:var(--ink-soft); }
+.nav-links a:hover{ color:var(--ink); text-decoration:none; }
+
+.nav-toggle{
+  display:none;
+  background:none; border:1px solid var(--line); border-radius:var(--radius-sm);
+  width:40px; height:40px; cursor:pointer;
+}
+.nav-toggle span, .nav-toggle::before, .nav-toggle::after{
+  content:''; display:block; height:2px; width:18px; background:var(--ink);
+  margin:4px auto;
+}
+
+@media (max-width: 720px){
+  .nav-links{
+    position:absolute; top:100%; left:0; right:0;
+    background:var(--surface); border-bottom:1px solid var(--line);
+    flex-direction:column; gap:0; padding:8px 0;
+    display:none;
+  }
+  .nav-links.open{ display:flex; }
+  .nav-links li{ border-top:1px solid var(--line-soft); }
+  .nav-links a{ display:block; padding:14px 20px; }
+  .nav-toggle{ display:block; }
+}
+
+/* --- breadcrumb --- */
+.breadcrumb{
+  font-size:.85rem; color:var(--ink-faint);
+  padding:14px 0 0;
+}
+.breadcrumb a{ color:var(--ink-faint); }
+.breadcrumb a:hover{ color:var(--teal); }
+
+/* --- footer --- */
+.site-footer{
+  border-top:1px solid var(--line);
+  margin-top:80px;
+  padding:40px 0;
+  color:var(--ink-faint);
+  font-size:.88rem;
+}
+.footer-grid{
+  display:flex; flex-wrap:wrap; gap:32px; justify-content:space-between;
+}
+.footer-links{ display:flex; gap:20px; list-style:none; padding:0; margin:0; flex-wrap:wrap; }
+.footer-links a{ color:var(--ink-faint); }
+.footer-links a:hover{ color:var(--ink); }
+
+/* --- shared section spacing --- */
+section{ padding:48px 0; }
+section.tight{ padding:28px 0; }
+.section-divider{ border:none; border-top:1px solid var(--line); margin:0; }
+
+/* --- pill / eyebrow --- */
+.eyebrow{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--teal);
+  background:var(--teal-soft);
+  padding:4px 10px;
+  border-radius:999px;
+  margin-bottom:14px;
+}
+
+/* --- related calculators grid --- */
+.related-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:14px;
+}
+.related-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px 18px;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.related-card:hover{
+  border-color:var(--teal);
+  transform:translateY(-2px);
+  text-decoration:none;
+}
+.related-card .rc-title{
+  font-weight:600; color:var(--ink); display:block; margin-bottom:4px;
+}
+.related-card .rc-desc{ font-size:.85rem; color:var(--ink-faint); }
+
+/* --- FAQ accordion --- */
+.faq-item{
+  border-bottom:1px solid var(--line-soft);
+}
+.faq-item:first-child{ border-top:1px solid var(--line-soft); }
+.faq-q{
+  width:100%; text-align:left; background:none; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 2px; font-family:var(--font-body); font-weight:600; font-size:1rem;
+  color:var(--ink);
+}
+.faq-q::after{
+  content:'+'; font-family:var(--font-mono); font-size:1.2rem; color:var(--brass);
+  transition:transform .15s ease;
+}
+.faq-item.open .faq-q::after{ transform:rotate(45deg); }
+.faq-a{
+  max-height:0; overflow:hidden; transition:max-height .2s ease;
+  color:var(--ink-soft); font-size:.95rem;
+}
+.faq-item.open .faq-a{ max-height:400px; padding-bottom:18px; }

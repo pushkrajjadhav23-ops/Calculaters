@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mortgage Calculator — Monthly Payment & Amortization | calculaters</title>
+<meta name="description" content="Free mortgage calculator with live amortization chart. Estimate your monthly payment, total interest, and payoff timeline for any home price, down payment, rate, and term.">
+<link rel="canonical" href="https://pushkrajjadhav23-ops.github.io/Calculaters/mortgage-calculator.html">
+
+<meta property="og:title" content="Mortgage Calculator — Monthly Payment & Amortization">
+<meta property="og:description" content="Estimate your monthly mortgage payment and see exactly how much goes to principal vs interest over time.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pushkrajjadhav23-ops.github.io/Calculaters/mortgage-calculator.html">
+
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="calculator.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How is my monthly mortgage payment calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your monthly payment is calculated using the fixed-rate amortization formula, which spreads the loan amount and total interest evenly across every payment so that the loan balance reaches zero at the end of the term."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does more of my payment go to interest at the start?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Interest is calculated on the remaining balance each month. Early in the loan the balance is highest, so the interest portion is largest. As the balance shrinks, more of each fixed payment goes toward principal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a good down payment percentage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "20% is a common benchmark because it typically avoids private mortgage insurance in the US, but many loan programs accept less. A larger down payment lowers your loan amount, monthly payment, and total interest paid."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this calculator include taxes and insurance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. This tool calculates principal and interest only. Property taxes, homeowners insurance, and any HOA fees are added separately by your lender and vary by location."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">calculaters<span class="brand-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="finance.html">Finance</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"></button>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="finance.html">Finance</a> / Mortgage Calculator
+    </p>
+
+    <section class="tight">
+      <span class="eyebrow">Finance · Loan calculators</span>
+      <h1>Mortgage Calculator</h1>
+      <p>Estimate your monthly mortgage payment and see how much of it goes toward principal versus interest over the life of the loan — updated instantly as you adjust the numbers.</p>
+    </section>
+
+    <div class="tool">
+      <div class="tool-grid">
+        <div class="tool-inputs">
+
+          <div class="currency-toggle" role="group" aria-label="Currency">
+            <button type="button" data-currency="USD">USD $</button>
+            <button type="button" data-currency="GBP">GBP £</button>
+            <button type="button" data-currency="EUR">EUR €</button>
+            <button type="button" data-currency="INR">INR ₹</button>
+            <button type="button" data-currency="AUD">AUD A$</button>
+            <button type="button" data-currency="CAD">CAD C$</button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="homePrice">Home price</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="homePrice" value="400000" min="0" step="1000">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="downPayment">Down payment <span class="field-value" id="downPctLabel">20%</span></label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="downPayment" value="80000" min="0" step="1000">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="interestRate">Interest rate</label>
+            <div class="field-input-row">
+              <input type="number" id="interestRate" value="6.5" min="0" max="20" step="0.05">
+              <span class="suffix">%</span>
+            </div>
+            <input type="range" id="interestRateRange" min="0" max="15" step="0.05" value="6.5"
+                   oninput="document.getElementById('interestRate').value=this.value; document.getElementById('interestRate').dispatchEvent(new Event('input'));">
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="loanTerm">Loan term</label>
+            <div class="field-input-row">
+              <input type="number" id="loanTerm" value="30" min="1" max="40" step="1">
+              <span class="suffix">years</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tool-results">
+          <div class="headline-stat">
+            <div class="stat-label">Monthly payment</div>
+            <div class="stat-value num" id="monthlyPayment">$0</div>
+          </div>
+
+          <div class="stat-row">
+            <span class="stat-label">Loan amount</span>
+            <span class="stat-value num" id="loanAmountOut">$0</span>
+          </div>
+          <div class="stat-row interest">
+            <span class="stat-label">Total interest paid</span>
+            <span class="stat-value num" id="totalInterestOut">$0</span>
+          </div>
+          <div class="stat-row principal">
+            <span class="stat-label">Total cost of loan</span>
+            <span class="stat-value num" id="totalCostOut">$0</span>
+          </div>
+
+          <div class="roofline">
+            <div class="roofline-head">
+              <span class="rl-title">The Roofline</span>
+              <span class="rl-sub">Cumulative principal vs interest paid</span>
+            </div>
+            <svg class="roofline-chart" id="rooflineChart" viewBox="0 0 640 240" role="img" aria-label="Chart of cumulative principal and interest paid over the loan term"></svg>
+            <div class="roofline-legend">
+              <span><i class="legend-swatch principal"></i> Principal paid</span>
+              <span><i class="legend-swatch interest"></i> Interest paid</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>How this is calculated</h2>
+      <p>Mortgage payments use a fixed-rate amortization formula. Every payment is the same amount, but the split between principal and interest changes each month because interest is charged on the remaining balance.</p>
+      <div class="formula-box">
+M&nbsp;=&nbsp;P&nbsp;×&nbsp;[r(1+r)<sup>n</sup>]&nbsp;/&nbsp;[(1+r)<sup>n</sup>&nbsp;−&nbsp;1]<br><br>
+M = monthly payment&nbsp;&nbsp;·&nbsp;&nbsp;P = loan amount&nbsp;&nbsp;·&nbsp;&nbsp;r = monthly interest rate (annual rate ÷ 12)&nbsp;&nbsp;·&nbsp;&nbsp;n = number of payments (years × 12)
+      </div>
+      <p>The teal region in the Roofline chart above is your cumulative principal paid; the brass region is cumulative interest. The ridge line where they meet is the crossover point — the moment each payment starts putting more toward principal than interest.</p>
+    </section>
+
+    <section class="worked-example">
+      <h2>Worked example</h2>
+      <p>A $400,000 home with a $80,000 (20%) down payment, a 6.5% interest rate, and a 30-year term:</p>
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="num">Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Loan amount</td><td class="num">$320,000</td></tr>
+          <tr><td>Monthly payment (principal + interest)</td><td class="num">≈ $2,022</td></tr>
+          <tr><td>Total interest paid over 30 years</td><td class="num">≈ $407,900</td></tr>
+          <tr><td>Total cost of the loan</td><td class="num">≈ $727,900</td></tr>
+        </tbody>
+      </table>
+      <p>Notice the total interest is larger than the loan amount itself — a reminder of why even small rate reductions or extra payments toward principal can save tens of thousands over the full term.</p>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">How is my monthly mortgage payment calculated?</button>
+          <div class="faq-a"><p>Your monthly payment is calculated using the fixed-rate amortization formula above, which spreads the loan amount and total interest evenly across every payment so the balance reaches exactly zero at the end of the term.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Why does more of my payment go to interest at the start?</button>
+          <div class="faq-a"><p>Interest is charged on the remaining balance each month. Early on, the balance is at its highest, so the interest portion is largest. As the balance shrinks, more of each fixed payment shifts toward principal — that's the crossover shown in the Roofline chart.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What is a good down payment percentage?</button>
+          <div class="faq-a"><p>20% is a common benchmark because it typically avoids private mortgage insurance in the US, but many loan programs accept less. A larger down payment lowers your loan amount, monthly payment, and total interest paid.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Does this calculator include taxes and insurance?</button>
+          <div class="faq-a"><p>No — this tool calculates principal and interest only. Property taxes, homeowners insurance, and any HOA fees are added separately by your lender and vary by location.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© <span id="year"></span> calculaters. All calculations are estimates for informational purposes only.</div>
+    <ul class="footer-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="main.js"></script>
+<script src="mortgage.js"></script>
+</body>
+</html>
