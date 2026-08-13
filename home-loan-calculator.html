@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Loan Calculator — EMI, Processing Fee & Eligibility | calculaters</title>
+<meta name="description" content="Free home loan calculator with EMI, total interest, processing fee, and an EMI-to-income eligibility check — see instantly what lenders would approve.">
+<link rel="canonical" href="https://pushkrajjadhav23-ops.github.io/Calculaters/home-loan-calculator.html">
+
+<meta property="og:title" content="Home Loan Calculator — EMI, Processing Fee & Eligibility">
+<meta property="og:description" content="Calculate your home loan EMI, processing fee, and see whether your EMI-to-income ratio fits what lenders typically approve.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pushkrajjadhav23-ops.github.io/Calculaters/home-loan-calculator.html">
+
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="calculator.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a good EMI-to-income ratio for a home loan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most lenders prefer your total EMI obligations to stay under 40-50% of your monthly income. Above 55-60%, approval becomes harder and lenders may ask for a smaller loan amount, longer tenure, or a co-applicant."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a home loan processing fee?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A processing fee is a one-time charge lenders take to cover loan application costs, typically 0.5% to 2% of the loan amount. It's usually deducted upfront and is separate from your EMI payments."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Fixed or floating interest rate — which is better for a home loan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fixed rates stay the same for the loan term, giving predictable EMIs but usually starting slightly higher. Floating rates move with the market, often starting lower but changing over time. Floating rates tend to average out cheaper over long tenures, but fixed rates protect against rate increases."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does a longer tenure always mean paying more interest?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. A longer tenure lowers your monthly EMI but increases the total interest paid over the life of the loan, since interest accrues on the outstanding balance for a longer period."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">calculaters<span class="brand-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="finance.html">Finance</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"></button>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="finance.html">Finance</a> / Home Loan Calculator
+    </p>
+
+    <section class="tight">
+      <span class="eyebrow">Finance · Loan calculators</span>
+      <h1>Home Loan Calculator</h1>
+      <p>Calculate your home loan EMI and processing fee, and check whether your EMI-to-income ratio falls in the range most lenders approve.</p>
+    </section>
+
+    <div class="tool">
+      <div class="tool-grid">
+        <div class="tool-inputs">
+
+          <div class="currency-toggle" role="group" aria-label="Currency">
+            <button type="button" data-currency="USD">USD $</button>
+            <button type="button" data-currency="GBP">GBP £</button>
+            <button type="button" data-currency="EUR">EUR €</button>
+            <button type="button" data-currency="INR">INR ₹</button>
+            <button type="button" data-currency="AUD">AUD A$</button>
+            <button type="button" data-currency="CAD">CAD C$</button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="hlAmount">Loan amount</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="hlAmount" value="300000" min="0" step="1000">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="hlRate">Interest rate (per annum)</label>
+            <div class="field-input-row">
+              <input type="number" id="hlRate" value="7" min="0" max="20" step="0.05">
+              <span class="suffix">%</span>
+            </div>
+            <input type="range" min="0" max="15" step="0.05" value="7"
+                   oninput="document.getElementById('hlRate').value=this.value; document.getElementById('hlRate').dispatchEvent(new Event('input'));">
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="hlTenure">Loan tenure</label>
+            <div class="field-input-row">
+              <input type="number" id="hlTenure" value="20" min="1" max="40" step="1">
+              <span class="suffix">years</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="hlFee">Processing fee</label>
+            <div class="field-input-row">
+              <input type="number" id="hlFee" value="1" min="0" max="5" step="0.1">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="hlIncome">Monthly income <span class="field-value" style="font-weight:400; color:var(--ink-faint);">(optional — for eligibility check)</span></label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="hlIncome" value="" min="0" step="100" placeholder="e.g. 6000">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tool-results">
+          <div class="headline-stat">
+            <div class="stat-label">Monthly EMI</div>
+            <div class="stat-value num" id="hlEmiOut">$0</div>
+          </div>
+
+          <div class="stat-row interest">
+            <span class="stat-label">Total interest payable</span>
+            <span class="stat-value num" id="hlInterestOut">$0</span>
+          </div>
+          <div class="stat-row principal">
+            <span class="stat-label">Total payment</span>
+            <span class="stat-value num" id="hlTotalOut">$0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Processing fee (one-time)</span>
+            <span class="stat-value num" id="hlFeeOut">$0</span>
+          </div>
+
+          <div class="stat-row" id="hlRatioBlock" style="display:none">
+            <span class="stat-label">EMI-to-income ratio</span>
+            <span class="stat-value num" id="hlRatioValue">0%</span>
+          </div>
+          <p class="roofline-note" id="hlRatioNote"></p>
+
+          <div class="roofline">
+            <div class="roofline-head">
+              <span class="rl-title">The Roofline</span>
+              <span class="rl-sub">Cumulative principal vs interest paid</span>
+            </div>
+            <svg class="roofline-chart" id="rooflineChart" viewBox="0 0 640 240" role="img" aria-label="Chart of cumulative principal and interest paid over the loan tenure"></svg>
+            <div class="roofline-legend">
+              <span><i class="legend-swatch principal"></i> Principal paid</span>
+              <span><i class="legend-swatch interest"></i> Interest paid</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>How this is calculated</h2>
+      <p>Your EMI is calculated with the standard fixed-rate amortization formula. The processing fee is a separate one-time charge, not part of the EMI, and the eligibility check compares your EMI to the monthly income you enter against the ranges lenders typically use.</p>
+      <div class="formula-box">
+EMI&nbsp;=&nbsp;P&nbsp;×&nbsp;[r(1+r)<sup>n</sup>]&nbsp;/&nbsp;[(1+r)<sup>n</sup>&nbsp;−&nbsp;1]<br><br>
+P = loan amount&nbsp;&nbsp;·&nbsp;&nbsp;r = monthly interest rate (annual rate ÷ 12)&nbsp;&nbsp;·&nbsp;&nbsp;n = number of monthly installments (years × 12)
+      </div>
+      <p>Lenders generally want your total EMI obligations under 40-55% of monthly income — enter your income above to see where you land.</p>
+    </section>
+
+    <section class="worked-example">
+      <h2>Worked example</h2>
+      <p>A $300,000 home loan at 7% interest over a 20-year tenure, with a 1% processing fee, for a borrower earning $6,000/month:</p>
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="num">Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Loan amount</td><td class="num">$300,000</td></tr>
+          <tr><td>Monthly EMI</td><td class="num">≈ $2,326</td></tr>
+          <tr><td>Total interest over 20 years</td><td class="num">≈ $258,240</td></tr>
+          <tr><td>Processing fee (1%)</td><td class="num">$3,000</td></tr>
+          <tr><td>EMI-to-income ratio</td><td class="num">≈ 38.8%</td></tr>
+        </tbody>
+      </table>
+      <p>At a 38.8% EMI-to-income ratio, this borrower sits comfortably within the range most lenders approve, with room left over for other obligations.</p>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">What is a good EMI-to-income ratio for a home loan?</button>
+          <div class="faq-a"><p>Most lenders prefer your total EMI obligations to stay under 40-50% of your monthly income. Above 55-60%, approval becomes harder and lenders may ask for a smaller loan amount, longer tenure, or a co-applicant.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What is a home loan processing fee?</button>
+          <div class="faq-a"><p>A processing fee is a one-time charge lenders take to cover loan application costs, typically 0.5% to 2% of the loan amount. It's usually deducted upfront and is separate from your EMI payments.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Fixed or floating interest rate — which is better for a home loan?</button>
+          <div class="faq-a"><p>Fixed rates stay the same for the loan term, giving predictable EMIs but usually starting slightly higher. Floating rates move with the market, often starting lower but changing over time. Floating rates tend to average out cheaper over long tenures, but fixed rates protect against rate increases.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Does a longer tenure always mean paying more interest?</button>
+          <div class="faq-a"><p>Yes. A longer tenure lowers your monthly EMI but increases the total interest paid over the life of the loan, since interest accrues on the outstanding balance for a longer period.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Related calculators</h2>
+      <div class="related-grid">
+        <a class="related-card" href="mortgage-calculator.html">
+          <span class="rc-title">Mortgage Calculator</span>
+          <span class="rc-desc">Monthly payment, total interest, and payoff chart.</span>
+        </a>
+        <a class="related-card" href="emi-calculator.html">
+          <span class="rc-title">EMI Calculator</span>
+          <span class="rc-desc">Monthly EMI, total interest, and payment breakdown for any loan.</span>
+        </a>
+        <a class="related-card" href="refinance-calculator.html">
+          <span class="rc-title">Refinance Breakeven Calculator</span>
+          <span class="rc-desc">See if refinancing your mortgage is worth the closing costs.</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© <span id="year"></span> calculaters. All calculations are estimates for informational purposes only.</div>
+    <ul class="footer-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="main.js"></script>
+<script src="homeloan.js"></script>
+</body>
+</html>
