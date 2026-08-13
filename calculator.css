@@ -121,6 +121,10 @@ input[type="range"]{
   border:1px solid var(--line-soft);
   border-radius:var(--radius-sm);
 }
+.roofline-note{
+  font-size:.85rem; color:var(--ink-soft); margin-top:10px;
+}
+
 .roofline-legend{
   display:flex; gap:18px; margin-top:10px; font-size:.8rem; color:var(--ink-soft);
 }

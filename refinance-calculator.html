@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refinance Breakeven Calculator — Is Refinancing Worth It? | calculaters</title>
+<meta name="description" content="Free refinance calculator. Compare your current and new mortgage payment, see your monthly savings, and find exactly how many months it takes to break even on closing costs.">
+<link rel="canonical" href="https://pushkrajjadhav23-ops.github.io/Calculaters/refinance-calculator.html">
+
+<meta property="og:title" content="Refinance Breakeven Calculator — Is Refinancing Worth It?">
+<meta property="og:description" content="See your monthly savings and exactly when refinancing pays for itself.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pushkrajjadhav23-ops.github.io/Calculaters/refinance-calculator.html">
+
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="calculator.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a refinance breakeven point?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The breakeven point is the number of months it takes for your accumulated monthly savings to equal the closing costs you paid to refinance. After that point, every month of savings is money ahead."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What closing costs should I include?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Include lender fees, appraisal, title insurance, and any origination points paid at closing. These typically run 2 to 5 percent of the loan amount, though exact costs vary by lender and location."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is refinancing worth it if I'm moving soon?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you plan to sell or move before reaching the breakeven point, you likely won't recover the closing costs, so refinancing usually isn't worth it in that case. Compare your expected time in the home to the breakeven month shown above."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does a lower rate always mean I should refinance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not necessarily. A lower rate lowers your payment, but if closing costs are high or you extend your loan term significantly, you may pay more in total interest over time even while saving monthly. Always check both the breakeven point and total interest."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">calculaters<span class="brand-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="finance.html">Finance</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"></button>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="finance.html">Finance</a> / Refinance Calculator
+    </p>
+
+    <section class="tight">
+      <span class="eyebrow">Finance · Loan calculators</span>
+      <h1>Refinance Breakeven Calculator</h1>
+      <p>Compare your current mortgage payment to a new one, and see exactly how many months it takes for your savings to cover the closing costs.</p>
+    </section>
+
+    <div class="tool">
+      <div class="tool-grid">
+        <div class="tool-inputs">
+
+          <div class="currency-toggle" role="group" aria-label="Currency">
+            <button type="button" data-currency="USD">USD $</button>
+            <button type="button" data-currency="GBP">GBP £</button>
+            <button type="button" data-currency="EUR">EUR €</button>
+            <button type="button" data-currency="INR">INR ₹</button>
+            <button type="button" data-currency="AUD">AUD A$</button>
+            <button type="button" data-currency="CAD">CAD C$</button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="currentBalance">Current loan balance</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="currentBalance" value="300000" min="0" step="1000">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="currentRate">Current interest rate</label>
+            <div class="field-input-row">
+              <input type="number" id="currentRate" value="7.2" min="0" max="20" step="0.05">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="currentRemainingYears">Years remaining on current loan</label>
+            <div class="field-input-row">
+              <input type="number" id="currentRemainingYears" value="27" min="1" max="40" step="1">
+              <span class="suffix">years</span>
+            </div>
+          </div>
+
+          <hr class="section-divider" style="margin:22px 0">
+
+          <div class="field">
+            <label class="field-label" for="newRate">New interest rate</label>
+            <div class="field-input-row">
+              <input type="number" id="newRate" value="6.2" min="0" max="20" step="0.05">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="newTerm">New loan term</label>
+            <div class="field-input-row">
+              <input type="number" id="newTerm" value="30" min="1" max="40" step="1">
+              <span class="suffix">years</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="closingCosts">Closing costs</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="closingCosts" value="6000" min="0" step="100">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tool-results">
+          <div class="headline-stat">
+            <div class="stat-label">Breakeven point</div>
+            <div class="stat-value num" id="breakevenOut">—</div>
+          </div>
+          <p class="roofline-note" id="breakevenNote"></p>
+
+          <div class="stat-row">
+            <span class="stat-label">Current payment</span>
+            <span class="stat-value num" id="currentPaymentOut">$0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">New payment</span>
+            <span class="stat-value num" id="newPaymentOut">$0</span>
+          </div>
+          <div class="stat-row principal">
+            <span class="stat-label">Monthly savings</span>
+            <span class="stat-value num" id="monthlySavingsOut">$0 / mo</span>
+          </div>
+
+          <div class="roofline">
+            <div class="roofline-head">
+              <span class="rl-title">The Roofline</span>
+              <span class="rl-sub">Net savings after closing costs, over time</span>
+            </div>
+            <svg class="roofline-chart" id="rooflineChart" viewBox="0 0 640 240" role="img" aria-label="Chart of cumulative net savings crossing the breakeven point"></svg>
+            <div class="roofline-legend">
+              <span><i class="legend-swatch interest"></i> Still recovering costs</span>
+              <span><i class="legend-swatch principal"></i> Net savings</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>How this is calculated</h2>
+      <p>We calculate your current and new monthly payments using the standard fixed-rate amortization formula, then compare them.</p>
+      <div class="formula-box">
+Monthly savings&nbsp;=&nbsp;Current payment&nbsp;−&nbsp;New payment<br>
+Breakeven (months)&nbsp;=&nbsp;Closing costs&nbsp;÷&nbsp;Monthly savings
+      </div>
+      <p>In the Roofline chart above, the brass region is the period where you're still paying off your closing costs out of your monthly savings. The line crosses into the teal region — net savings — at your breakeven point.</p>
+    </section>
+
+    <section class="worked-example">
+      <h2>Worked example</h2>
+      <p>A $300,000 balance at 7.2% with 27 years remaining, refinanced to 6.2% over a new 30-year term, with $6,000 in closing costs:</p>
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="num">Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Current monthly payment</td><td class="num">≈ $2,142</td></tr>
+          <tr><td>New monthly payment</td><td class="num">≈ $1,838</td></tr>
+          <tr><td>Monthly savings</td><td class="num">≈ $304</td></tr>
+          <tr><td>Breakeven point</td><td class="num">≈ 20 months</td></tr>
+        </tbody>
+      </table>
+      <p>If you plan to stay in the home longer than about 20 months, this refinance pays for itself. Shorter than that, and you'd move before recovering the closing costs.</p>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">What is a refinance breakeven point?</button>
+          <div class="faq-a"><p>The breakeven point is the number of months it takes for your accumulated monthly savings to equal the closing costs you paid to refinance. After that point, every month of savings is money ahead.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What closing costs should I include?</button>
+          <div class="faq-a"><p>Include lender fees, appraisal, title insurance, and any origination points paid at closing. These typically run 2–5% of the loan amount, though exact costs vary by lender and location.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is refinancing worth it if I'm moving soon?</button>
+          <div class="faq-a"><p>If you plan to sell or move before reaching the breakeven point, you likely won't recover the closing costs, so refinancing usually isn't worth it in that case. Compare your expected time in the home to the breakeven month shown above.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Does a lower rate always mean I should refinance?</button>
+          <div class="faq-a"><p>Not necessarily. A lower rate lowers your payment, but if closing costs are high or you extend your loan term significantly, you may pay more in total interest over time even while saving monthly. Always check both the breakeven point and total interest.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Related calculators</h2>
+      <div class="related-grid">
+        <a class="related-card" href="mortgage-calculator.html">
+          <span class="rc-title">Mortgage Calculator</span>
+          <span class="rc-desc">Monthly payment, total interest, and payoff chart.</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© <span id="year"></span> calculaters. All calculations are estimates for informational purposes only.</div>
+    <ul class="footer-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="main.js"></script>
+<script src="refinance.js"></script>
+</body>
+</html>
