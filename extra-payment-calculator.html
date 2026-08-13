@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extra Payment Calculator — Loan Payoff Time & Interest Saved | calculaters</title>
+<meta name="description" content="See exactly how much time and interest you save by paying extra toward your loan principal each month, with a live chart comparing both payoff paths.">
+<link rel="canonical" href="https://pushkrajjadhav23-ops.github.io/Calculaters/extra-payment-calculator.html">
+
+<meta property="og:title" content="Extra Payment Calculator — Loan Payoff Time & Interest Saved">
+<meta property="og:description" content="See how much time and interest extra monthly payments save on your loan.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pushkrajjadhav23-ops.github.io/Calculaters/extra-payment-calculator.html">
+
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="calculator.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do extra payments reduce loan interest?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Interest is charged on your outstanding balance each month. Extra payments go straight toward principal, so your balance drops faster, which means less interest accrues on every payment after that — the savings compound over the life of the loan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it better to make extra payments monthly or as one lump sum?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Making extra payments as early and as consistently as possible saves the most interest, since balance reductions early in the loan compound over more remaining months. A lump sum applied early works similarly well to consistent smaller extra payments — what matters most is reducing principal sooner rather than later."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I pay extra on my loan or invest the money instead?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This depends on your loan's interest rate versus your expected investment return. If your loan rate is higher than what you'd reasonably expect to earn investing, paying extra toward the loan is often the safer, guaranteed return. If your loan rate is low, investing may grow your money more over time — though it carries market risk that a guaranteed interest reduction doesn't."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will my lender apply extra payments to principal automatically?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not always. Some lenders apply extra amounts to future scheduled payments instead of reducing principal immediately, unless you specify otherwise. Always confirm with your lender that extra payments are being applied directly to principal."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">calculaters<span class="brand-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="finance.html">Finance</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"></button>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="finance.html">Finance</a> / Extra Payment Calculator
+    </p>
+
+    <section class="tight">
+      <span class="eyebrow">Finance · Loan calculators</span>
+      <h1>Extra Payment Calculator</h1>
+      <p>See exactly how much time and interest you save by paying a little extra toward your loan principal every month.</p>
+    </section>
+
+    <div class="tool">
+      <div class="tool-grid">
+        <div class="tool-inputs">
+
+          <div class="currency-toggle" role="group" aria-label="Currency">
+            <button type="button" data-currency="USD">USD $</button>
+            <button type="button" data-currency="GBP">GBP £</button>
+            <button type="button" data-currency="EUR">EUR €</button>
+            <button type="button" data-currency="INR">INR ₹</button>
+            <button type="button" data-currency="AUD">AUD A$</button>
+            <button type="button" data-currency="CAD">CAD C$</button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="epBalance">Loan balance</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="epBalance" value="300000" min="0" step="1000">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="epRate">Interest rate</label>
+            <div class="field-input-row">
+              <input type="number" id="epRate" value="6.5" min="0" max="20" step="0.05">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="epTerm">Loan term</label>
+            <div class="field-input-row">
+              <input type="number" id="epTerm" value="30" min="1" max="40" step="1">
+              <span class="suffix">years</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="epExtra">Extra payment</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="epExtra" value="200" min="0" step="25">
+            </div>
+            <input type="range" min="0" max="2000" step="25" value="200"
+                   oninput="document.getElementById('epExtra').value=this.value; document.getElementById('epExtra').dispatchEvent(new Event('input'));">
+          </div>
+
+        </div>
+
+        <div class="tool-results">
+          <div class="headline-stat">
+            <div class="stat-label">Interest saved</div>
+            <div class="stat-value num" id="epInterestSaved">$0</div>
+          </div>
+
+          <div class="stat-row principal">
+            <span class="stat-label">Time saved</span>
+            <span class="stat-value num" id="epTimeSaved">—</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">New payoff time</span>
+            <span class="stat-value num" id="epNewPayoff">—</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Standard monthly payment</span>
+            <span class="stat-value num" id="epStandardPayment">$0</span>
+          </div>
+          <p class="roofline-note" id="epWarning"></p>
+
+          <div class="roofline">
+            <div class="roofline-head">
+              <span class="rl-title">The Payoff Curves</span>
+              <span class="rl-sub">Balance remaining over time</span>
+            </div>
+            <svg class="roofline-chart" id="payoffChart" viewBox="0 0 640 240" role="img" aria-label="Chart comparing standard payoff to accelerated payoff with extra payments"></svg>
+            <div class="roofline-legend">
+              <span><i class="legend-swatch interest" style="background:var(--brass)"></i> Standard payoff</span>
+              <span><i class="legend-swatch principal"></i> With extra payments</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>How this is calculated</h2>
+      <p>We calculate your standard monthly payment using the fixed-rate amortization formula, then simulate two payoff paths: one paying just that amount, and one paying your extra amount on top each month, tracking the declining balance until each reaches zero.</p>
+      <div class="formula-box">
+Standard payment:&nbsp;M&nbsp;=&nbsp;P&nbsp;×&nbsp;[r(1+r)<sup>n</sup>]&nbsp;/&nbsp;[(1+r)<sup>n</sup>&nbsp;−&nbsp;1]<br><br>
+Each month with extra payments:&nbsp;New balance = Balance − (M + Extra − Balance × r)
+      </div>
+      <p>In the Payoff Curves chart above, the brass line is your standard payoff path; the teal line is the accelerated path with extra payments. The shaded gap between them is the head start those extra payments buy you — every month inside that gap is a month of interest you don't pay.</p>
+    </section>
+
+    <section class="worked-example">
+      <h2>Worked example</h2>
+      <p>A $300,000 loan at 6.5% over 30 years, with a $200 extra payment every month:</p>
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="num">Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Standard monthly payment</td><td class="num">≈ $1,896</td></tr>
+          <tr><td>Standard payoff time</td><td class="num">30 years</td></tr>
+          <tr><td>New payoff time with $200 extra</td><td class="num">≈ 23y 1mo</td></tr>
+          <tr><td>Time saved</td><td class="num">≈ 6y 11mo</td></tr>
+          <tr><td>Interest saved</td><td class="num">≈ $103,400</td></tr>
+        </tbody>
+      </table>
+      <p>A $200/month extra payment — less than many people spend on subscriptions and takeout combined — cuts nearly seven years off the loan and saves over $100,000 in interest.</p>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">How do extra payments reduce loan interest?</button>
+          <div class="faq-a"><p>Interest is charged on your outstanding balance each month. Extra payments go straight toward principal, so your balance drops faster, which means less interest accrues on every payment after that — the savings compound over the life of the loan.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is it better to make extra payments monthly or as one lump sum?</button>
+          <div class="faq-a"><p>Making extra payments as early and as consistently as possible saves the most interest, since balance reductions early in the loan compound over more remaining months. A lump sum applied early works similarly well to consistent smaller extra payments — what matters most is reducing principal sooner rather than later.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Should I pay extra on my loan or invest the money instead?</button>
+          <div class="faq-a"><p>This depends on your loan's interest rate versus your expected investment return. If your loan rate is higher than what you'd reasonably expect to earn investing, paying extra toward the loan is often the safer, guaranteed return. If your loan rate is low, investing may grow your money more over time — though it carries market risk that a guaranteed interest reduction doesn't.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Will my lender apply extra payments to principal automatically?</button>
+          <div class="faq-a"><p>Not always. Some lenders apply extra amounts to future scheduled payments instead of reducing principal immediately, unless you specify otherwise. Always confirm with your lender that extra payments are being applied directly to principal.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Related calculators</h2>
+      <div class="related-grid">
+        <a class="related-card" href="mortgage-calculator.html">
+          <span class="rc-title">Mortgage Calculator</span>
+          <span class="rc-desc">Monthly payment, total interest, and payoff chart.</span>
+        </a>
+        <a class="related-card" href="refinance-calculator.html">
+          <span class="rc-title">Refinance Breakeven Calculator</span>
+          <span class="rc-desc">See if refinancing your mortgage is worth the closing costs.</span>
+        </a>
+        <a class="related-card" href="home-loan-calculator.html">
+          <span class="rc-title">Home Loan Calculator</span>
+          <span class="rc-desc">EMI, processing fee, and an EMI-to-income eligibility check.</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© <span id="year"></span> calculaters. All calculations are estimates for informational purposes only.</div>
+    <ul class="footer-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="main.js"></script>
+<script src="extra-payment.js"></script>
+</body>
+</html>
