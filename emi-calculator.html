@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMI Calculator — Loan EMI, Total Interest & Payment Breakdown | calculaters</title>
+<meta name="description" content="Free EMI calculator for personal, car, and home loans. Instantly calculate your monthly EMI, total interest payable, and see a live principal vs interest chart.">
+<link rel="canonical" href="https://pushkrajjadhav23-ops.github.io/Calculaters/emi-calculator.html">
+
+<meta property="og:title" content="EMI Calculator — Loan EMI, Total Interest & Payment Breakdown">
+<meta property="og:description" content="Calculate your monthly EMI for any loan and see exactly how much goes to principal vs interest.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pushkrajjadhav23-ops.github.io/Calculaters/emi-calculator.html">
+
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="calculator.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is EMI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "EMI stands for Equated Monthly Installment — a fixed payment amount made by a borrower to a lender each month, covering both principal and interest, until the loan is fully repaid."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is EMI calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "EMI is calculated using the fixed-rate amortization formula, based on the loan amount, the monthly interest rate, and the total number of monthly installments over the loan tenure."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does prepayment reduce my EMI or my tenure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on what you choose with your lender. Most lenders let you either keep the EMI the same and shorten the loan tenure, or keep the tenure the same and reduce the EMI amount. Shortening the tenure usually saves more total interest."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between flat rate and reducing balance interest?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reducing balance interest, used by this calculator, charges interest only on the outstanding balance each month, so the interest portion shrinks over time. Flat rate interest charges on the original loan amount for the entire tenure, which usually works out more expensive for the borrower."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">calculaters<span class="brand-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="finance.html">Finance</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"></button>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="finance.html">Finance</a> / EMI Calculator
+    </p>
+
+    <section class="tight">
+      <span class="eyebrow">Finance · Loan calculators</span>
+      <h1>EMI Calculator</h1>
+      <p>Calculate the Equated Monthly Installment (EMI) for any loan — personal, car, or home — and see exactly how much of each payment goes toward principal versus interest.</p>
+    </section>
+
+    <div class="tool">
+      <div class="tool-grid">
+        <div class="tool-inputs">
+
+          <div class="currency-toggle" role="group" aria-label="Currency">
+            <button type="button" data-currency="USD">USD $</button>
+            <button type="button" data-currency="GBP">GBP £</button>
+            <button type="button" data-currency="EUR">EUR €</button>
+            <button type="button" data-currency="INR">INR ₹</button>
+            <button type="button" data-currency="AUD">AUD A$</button>
+            <button type="button" data-currency="CAD">CAD C$</button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="loanAmount">Loan amount</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="loanAmount" value="20000" min="0" step="500">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="loanRate">Interest rate (per annum)</label>
+            <div class="field-input-row">
+              <input type="number" id="loanRate" value="10" min="0" max="30" step="0.05">
+              <span class="suffix">%</span>
+            </div>
+            <input type="range" min="0" max="25" step="0.05" value="10"
+                   oninput="document.getElementById('loanRate').value=this.value; document.getElementById('loanRate').dispatchEvent(new Event('input'));">
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="loanTenure">Loan tenure <span class="field-value" id="tenureUnitLabel">years</span></label>
+            <div class="field-input-row">
+              <input type="number" id="loanTenure" value="5" min="1" step="1">
+            </div>
+            <div class="currency-toggle tenure-toggle" role="group" aria-label="Tenure unit" style="margin-top:10px; margin-bottom:0;">
+              <button type="button" data-unit="years" class="active">Years</button>
+              <button type="button" data-unit="months">Months</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tool-results">
+          <div class="headline-stat">
+            <div class="stat-label">Monthly EMI</div>
+            <div class="stat-value num" id="emiOut">$0</div>
+          </div>
+
+          <div class="stat-row">
+            <span class="stat-label">Principal amount</span>
+            <span class="stat-value num" id="principalOut">$0</span>
+          </div>
+          <div class="stat-row interest">
+            <span class="stat-label">Total interest payable</span>
+            <span class="stat-value num" id="totalInterestOut">$0</span>
+          </div>
+          <div class="stat-row principal">
+            <span class="stat-label">Total payment</span>
+            <span class="stat-value num" id="totalPaymentOut">$0</span>
+          </div>
+
+          <div class="roofline">
+            <div class="roofline-head">
+              <span class="rl-title">The Roofline</span>
+              <span class="rl-sub">Cumulative principal vs interest paid</span>
+            </div>
+            <svg class="roofline-chart" id="rooflineChart" viewBox="0 0 640 240" role="img" aria-label="Chart of cumulative principal and interest paid over the loan tenure"></svg>
+            <div class="roofline-legend">
+              <span><i class="legend-swatch principal"></i> Principal paid</span>
+              <span><i class="legend-swatch interest"></i> Interest paid</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>How this is calculated</h2>
+      <p>EMI uses the same fixed-rate amortization formula banks use for personal, auto, and home loans. Every installment is the same amount, but the split between principal and interest shifts each month as the outstanding balance shrinks.</p>
+      <div class="formula-box">
+EMI&nbsp;=&nbsp;P&nbsp;×&nbsp;[r(1+r)<sup>n</sup>]&nbsp;/&nbsp;[(1+r)<sup>n</sup>&nbsp;−&nbsp;1]<br><br>
+P = principal loan amount&nbsp;&nbsp;·&nbsp;&nbsp;r = monthly interest rate (annual rate ÷ 12)&nbsp;&nbsp;·&nbsp;&nbsp;n = number of monthly installments
+      </div>
+      <p>The teal region in the Roofline chart above is cumulative principal paid; the brass region is cumulative interest. The ridge line where they meet marks the point where each EMI starts putting more toward principal than interest.</p>
+    </section>
+
+    <section class="worked-example">
+      <h2>Worked example</h2>
+      <p>A $20,000 loan at 10% annual interest over a 5-year (60-month) tenure:</p>
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="num">Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Principal amount</td><td class="num">$20,000</td></tr>
+          <tr><td>Monthly EMI</td><td class="num">≈ $425</td></tr>
+          <tr><td>Total interest payable</td><td class="num">≈ $5,496</td></tr>
+          <tr><td>Total payment over 5 years</td><td class="num">≈ $25,496</td></tr>
+        </tbody>
+      </table>
+      <p>Shortening the tenure or making prepayments toward principal reduces the total interest — even a small extra payment early in the loan can meaningfully cut what you pay overall.</p>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">What is EMI?</button>
+          <div class="faq-a"><p>EMI stands for Equated Monthly Installment — a fixed payment amount made by a borrower to a lender each month, covering both principal and interest, until the loan is fully repaid.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">How is EMI calculated?</button>
+          <div class="faq-a"><p>EMI is calculated using the fixed-rate amortization formula shown above, based on the loan amount, the monthly interest rate, and the total number of monthly installments over the loan tenure.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Does prepayment reduce my EMI or my tenure?</button>
+          <div class="faq-a"><p>It depends on what you choose with your lender. Most let you either keep the EMI the same and shorten the tenure, or keep the tenure the same and reduce the EMI. Shortening the tenure usually saves more total interest.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What is the difference between flat rate and reducing balance interest?</button>
+          <div class="faq-a"><p>Reducing balance interest, used by this calculator, charges interest only on the outstanding balance each month, so the interest portion shrinks over time. Flat rate interest charges on the original loan amount for the entire tenure, which usually works out more expensive for the borrower.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Related calculators</h2>
+      <div class="related-grid">
+        <a class="related-card" href="mortgage-calculator.html">
+          <span class="rc-title">Mortgage Calculator</span>
+          <span class="rc-desc">Monthly payment, total interest, and payoff chart for home loans.</span>
+        </a>
+        <a class="related-card" href="refinance-calculator.html">
+          <span class="rc-title">Refinance Breakeven Calculator</span>
+          <span class="rc-desc">See if refinancing your mortgage is worth the closing costs.</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© <span id="year"></span> calculaters. All calculations are estimates for informational purposes only.</div>
+    <ul class="footer-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="main.js"></script>
+<script src="emi.js"></script>
+</body>
+</html>
