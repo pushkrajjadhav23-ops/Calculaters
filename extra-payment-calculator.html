@@ -154,13 +154,24 @@
 
           <div class="roofline">
             <div class="roofline-head">
-              <span class="rl-title">The Payoff Curves</span>
-              <span class="rl-sub">Balance remaining over time</span>
+              <span class="rl-title">The Split</span>
+              <span class="rl-sub">Principal vs interest, standard vs with extra payments</span>
             </div>
-            <svg class="roofline-chart" id="payoffChart" viewBox="0 0 640 240" role="img" aria-label="Chart comparing standard payoff to accelerated payoff with extra payments"></svg>
-            <div class="roofline-legend">
-              <span><i class="legend-swatch interest" style="background:var(--brass)"></i> Standard payoff</span>
-              <span><i class="legend-swatch principal"></i> With extra payments</span>
+            <div class="donut-pair">
+              <div>
+                <div class="donut-pair-label">Standard payoff</div>
+                <div class="donut-wrap">
+                  <svg class="roofline-chart donut" id="standardChart" viewBox="0 0 320 320" role="img" aria-label="Donut chart of principal vs interest for the standard payoff"></svg>
+                  <div class="donut-legend"></div>
+                </div>
+              </div>
+              <div>
+                <div class="donut-pair-label">With extra payments</div>
+                <div class="donut-wrap">
+                  <svg class="roofline-chart donut" id="acceleratedChart" viewBox="0 0 320 320" role="img" aria-label="Donut chart of principal vs interest with extra payments applied"></svg>
+                  <div class="donut-legend"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -174,7 +185,7 @@
 Standard payment:&nbsp;M&nbsp;=&nbsp;P&nbsp;×&nbsp;[r(1+r)<sup>n</sup>]&nbsp;/&nbsp;[(1+r)<sup>n</sup>&nbsp;−&nbsp;1]<br><br>
 Each month with extra payments:&nbsp;New balance = Balance − (M + Extra − Balance × r)
       </div>
-      <p>In the Payoff Curves chart above, the brass line is your standard payoff path; the teal line is the accelerated path with extra payments. The shaded gap between them is the head start those extra payments buy you — every month inside that gap is a month of interest you don't pay.</p>
+      <p>The two Split charts above compare your total cost under each path — standard versus with extra payments. Watch the brass (interest) slice shrink on the right: that's the direct payoff of paying extra toward principal.</p>
     </section>
 
     <section class="worked-example">

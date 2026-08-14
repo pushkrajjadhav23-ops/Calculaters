@@ -88,50 +88,75 @@ input[type="range"]{
   color:var(--ink-faint); font-weight:600;
 }
 .headline-stat .stat-value{
-  font-size:2.4rem; font-weight:600; color:var(--ink);
-  line-height:1.1; margin-top:4px;
+  font-size:2.8rem; font-weight:700; color:var(--ink);
+  line-height:1.1; margin-top:6px; letter-spacing:.005em;
 }
 
 .stat-row{
   display:flex; justify-content:space-between; align-items:center;
-  padding:10px 0; border-top:1px solid var(--line-soft);
-  font-size:.92rem;
+  padding:12px 0; border-top:1px solid var(--line-soft);
+  font-size:.95rem;
 }
 .stat-row .stat-label{ color:var(--ink-soft); }
-.stat-row .stat-value{ font-family:var(--font-mono); font-weight:600; color:var(--ink); }
-.stat-row.interest .stat-value{ color:var(--brass); }
+.stat-row .stat-value{ font-family:var(--font-mono); font-weight:700; font-size:1.05rem; color:var(--ink); }
+.stat-row.interest .stat-value{ color:#B5721A; } /* darker than --brass for text contrast */
 .stat-row.principal .stat-value{ color:var(--teal); }
 
-/* ---------- the Roofline chart ---------- */
+/* ---------- "The Split" donut chart ---------- */
 .roofline{
   margin-top:26px;
 }
 .roofline-head{
   display:flex; justify-content:space-between; align-items:baseline;
-  margin-bottom:10px;
+  margin-bottom:14px;
 }
 .roofline-head .rl-title{
   font-family:var(--font-display); font-size:1.02rem; font-weight:600; color:var(--ink);
 }
 .roofline-head .rl-sub{ font-size:.78rem; color:var(--ink-faint); }
 
-.roofline-chart{
-  width:100%; height:auto; display:block;
+.donut-wrap{
+  display:flex; align-items:center; gap:24px; flex-wrap:wrap;
   background:var(--paper);
   border:1px solid var(--line-soft);
   border-radius:var(--radius-sm);
+  padding:20px;
+}
+.roofline-chart.donut{
+  width:168px; height:168px; flex-shrink:0;
+  display:block; margin:0 auto;
+}
+.donut-legend{
+  flex:1; min-width:170px;
+  display:flex; flex-direction:column; gap:16px;
+}
+.donut-legend-item{
+  display:flex; align-items:flex-start; gap:10px;
+}
+.donut-legend-swatch{
+  width:13px; height:13px; border-radius:4px; margin-top:4px; flex-shrink:0;
+}
+.donut-legend-text{ display:flex; flex-direction:column; gap:2px; }
+.donut-legend-label{ font-size:.8rem; color:var(--ink-soft); font-weight:500; }
+.donut-legend-value{
+  font-family:var(--font-mono); font-weight:700; font-size:1.1rem; color:var(--ink);
+  letter-spacing:.015em; font-variant-numeric: tabular-nums;
+}
+.donut-legend-pct{
+  font-family:var(--font-mono); font-weight:500; font-size:.82rem; color:var(--ink-faint);
 }
 .roofline-note{
   font-size:.85rem; color:var(--ink-soft); margin-top:10px;
 }
 
-.roofline-legend{
-  display:flex; gap:18px; margin-top:10px; font-size:.8rem; color:var(--ink-soft);
+/* two donuts stacked (used by the extra-payment calculator to
+   compare standard vs accelerated payoff side by side) */
+.donut-pair{ display:flex; flex-direction:column; gap:16px; }
+.donut-pair-label{
+  font-size:.82rem; font-weight:600; color:var(--ink-soft);
+  text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px;
 }
-.roofline-legend span{ display:inline-flex; align-items:center; gap:6px; }
-.legend-swatch{ width:10px; height:10px; border-radius:2px; display:inline-block; }
-.legend-swatch.principal{ background:var(--teal); }
-.legend-swatch.interest{ background:var(--brass); }
+
 
 /* ---------- content sections below the tool ---------- */
 .formula-box{

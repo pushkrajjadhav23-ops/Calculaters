@@ -12,16 +12,18 @@
   /* --- color --- */
   --paper:        #F4F6F8;
   --surface:      #FFFFFF;
-  --ink:          #16233A;
+  --ink:          #131C30;
   --ink-soft:     #4A5A72;
   --ink-faint:    #8896A8;
   --line:         #D8DEE4;
   --line-soft:    #E7ECF0;
-  --brass:        #C08A2E;   /* interest / attention */
-  --brass-soft:   #F1E3C6;
-  --teal:         #1F6F63;   /* principal / trust */
-  --teal-soft:    #DCEAE7;
-  --danger:       #B3452F;
+  --brass:        #9C620D;   /* interest / attention — deepened, ~5:1 contrast on white for numbers */
+  --brass-fill:   #E0932C;   /* brighter variant, chart slices/decorative fills only, not text */
+  --brass-soft:   #FBE7C6;
+  --teal:         #0B7A6C;   /* principal / trust — deepened, ~5.2:1 contrast on white for numbers */
+  --teal-fill:    #0E8F7E;   /* brighter variant, chart slices/decorative fills only, not text */
+  --teal-soft:    #D3F0EB;
+  --danger:       #D6472E;
 
   /* --- type --- */
   --font-display: 'Fraunces', Georgia, serif;
@@ -76,6 +78,12 @@ p{ margin:0 0 1em; color:var(--ink-soft); }
 /* numbers/data always in mono, everywhere on the site */
 .num, .stat-value, input[type="number"], input[type="range"]{
   font-family:var(--font-mono);
+}
+.num, .stat-value{
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  font-weight:600;
+  letter-spacing:.015em;
 }
 
 /* --- skip link / focus --- */

@@ -153,13 +153,12 @@
 
           <div class="roofline">
             <div class="roofline-head">
-              <span class="rl-title">The Roofline</span>
-              <span class="rl-sub">Cumulative principal vs interest paid</span>
+              <span class="rl-title">The Split</span>
+              <span class="rl-sub">Principal vs interest, total cost</span>
             </div>
-            <svg class="roofline-chart" id="rooflineChart" viewBox="0 0 640 240" role="img" aria-label="Chart of cumulative principal and interest paid over the loan term"></svg>
-            <div class="roofline-legend">
-              <span><i class="legend-swatch principal"></i> Principal paid</span>
-              <span><i class="legend-swatch interest"></i> Interest paid</span>
+            <div class="donut-wrap">
+              <svg class="roofline-chart donut" id="rooflineChart" viewBox="0 0 320 320" role="img" aria-label="Donut chart of principal vs interest"></svg>
+              <div class="donut-legend"></div>
             </div>
           </div>
         </div>
@@ -173,7 +172,7 @@
 M&nbsp;=&nbsp;P&nbsp;×&nbsp;[r(1+r)<sup>n</sup>]&nbsp;/&nbsp;[(1+r)<sup>n</sup>&nbsp;−&nbsp;1]<br><br>
 M = monthly payment&nbsp;&nbsp;·&nbsp;&nbsp;P = loan amount&nbsp;&nbsp;·&nbsp;&nbsp;r = monthly interest rate (annual rate ÷ 12)&nbsp;&nbsp;·&nbsp;&nbsp;n = number of payments (years × 12)
       </div>
-      <p>The teal region in the Roofline chart above is your cumulative principal paid; the brass region is cumulative interest. The ridge line where they meet is the crossover point — the moment each payment starts putting more toward principal than interest.</p>
+      <p>The Split chart above shows how your total cost divides between principal (teal) and interest (brass). A longer term or higher rate grows that interest slice — a quick visual read on how much of what you pay is the actual cost of borrowing versus what you're building in equity.</p>
     </section>
 
     <section class="worked-example">
@@ -202,7 +201,7 @@ M = monthly payment&nbsp;&nbsp;·&nbsp;&nbsp;P = loan amount&nbsp;&nbsp;·&nbsp;
         </div>
         <div class="faq-item">
           <button class="faq-q">Why does more of my payment go to interest at the start?</button>
-          <div class="faq-a"><p>Interest is charged on the remaining balance each month. Early on, the balance is at its highest, so the interest portion is largest. As the balance shrinks, more of each fixed payment shifts toward principal — that's the crossover shown in the Roofline chart.</p></div>
+          <div class="faq-a"><p>Interest is charged on the remaining balance each month. Early on, the balance is at its highest, so the interest portion is largest. As the balance shrinks, more of each fixed payment shifts toward principal.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q">What is a good down payment percentage?</button>

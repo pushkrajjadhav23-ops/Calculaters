@@ -1,13 +1,13 @@
 // ============================================================
 // Mortgage Calculator
-// Standard fixed-rate amortization math + live UI binding +
-// "Roofline" chart: cumulative principal (teal) vs interest
-// (brass) paid over the life of the loan. The ridge where teal
-// meets brass is the crossover point — when principal overtakes
-// interest in each payment.
+// Standard fixed-rate amortization math + live UI binding.
+// "The Split" donut chart shows principal vs interest as a
+// share of total cost — since every payment is level, total
+// interest = (monthly payment × number of payments) − principal,
+// no month-by-month loop needed.
 // ============================================================
 
-function amortize(loanAmount, annualRatePct, years){
+function computeMortgage(loanAmount, annualRatePct, years){
   const n = Math.max(1, Math.round(years * 12));
   const r = (annualRatePct / 100) / 12;
 
@@ -15,76 +15,10 @@ function amortize(loanAmount, annualRatePct, years){
     ? loanAmount / n
     : loanAmount * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
 
-  let balance = loanAmount;
-  let cumPrincipal = 0;
-  let cumInterest = 0;
-  const yearly = [{ year: 0, principalCum: 0, interestCum: 0, totalCum: 0 }];
+  const totalCost = monthlyPayment * n;
+  const totalInterest = Math.max(totalCost - loanAmount, 0);
 
-  for (let m = 1; m <= n; m++){
-    const interest = balance * r;
-    let principal = monthlyPayment - interest;
-    if (m === n) principal = balance; // clean up rounding on final payment
-    balance = Math.max(0, balance - principal);
-    cumPrincipal += principal;
-    cumInterest += interest;
-
-    if (m % 12 === 0 || m === n){
-      yearly.push({
-        year: Math.ceil(m / 12),
-        principalCum: cumPrincipal,
-        interestCum: cumInterest,
-        totalCum: cumPrincipal + cumInterest,
-        balance
-      });
-    }
-  }
-
-  return {
-    monthlyPayment,
-    totalInterest: cumInterest,
-    totalCost: cumPrincipal + cumInterest,
-    yearly
-  };
-}
-
-// ---- Roofline SVG chart ----
-function renderRoofline(svgEl, yearly){
-  const W = 640, H = 240, padL = 44, padR = 16, padT = 16, padB = 28;
-  const innerW = W - padL - padR;
-  const innerH = H - padT - padB;
-
-  const maxYear = yearly[yearly.length - 1].year;
-  const maxTotal = yearly[yearly.length - 1].totalCum || 1;
-
-  const xScale = (year) => padL + (year / maxYear) * innerW;
-  const yScale = (val) => padT + innerH - (val / maxTotal) * innerH;
-  const baseY = padT + innerH;
-
-  const totalPoints = yearly.map(d => `${xScale(d.year)},${yScale(d.totalCum)}`);
-  const principalPoints = yearly.map(d => `${xScale(d.year)},${yScale(d.principalCum)}`);
-
-  const totalPath = `M${padL},${baseY} L${totalPoints.join(' L')} L${xScale(maxYear)},${baseY} Z`;
-  const principalPath = `M${padL},${baseY} L${principalPoints.join(' L')} L${xScale(maxYear)},${baseY} Z`;
-  const ridgeLine = `M${principalPoints.join(' L')}`;
-
-  // gridlines (quarter marks)
-  let grid = '';
-  for (let i = 1; i <= 3; i++){
-    const gy = padT + (innerH / 4) * i;
-    grid += `<line x1="${padL}" y1="${gy}" x2="${W - padR}" y2="${gy}" stroke="var(--line-soft)" stroke-width="1"/>`;
-  }
-
-  svgEl.innerHTML = `
-    <rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>
-    ${grid}
-    <path d="${totalPath}" fill="var(--brass)" fill-opacity="0.55"/>
-    <path d="${principalPath}" fill="var(--teal)" fill-opacity="0.9"/>
-    <path d="${ridgeLine}" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
-    <line x1="${padL}" y1="${baseY}" x2="${W - padR}" y2="${baseY}" stroke="var(--ink-faint)" stroke-width="1"/>
-    <text x="${padL}" y="${H - 6}" font-family="var(--font-mono)" font-size="10" fill="var(--ink-faint)">0</text>
-    <text x="${W - padR}" y="${H - 6}" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--ink-faint)">Yr ${maxYear}</text>
-  `;
-  svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  return { monthlyPayment, totalInterest, totalCost };
 }
 
 // ============================================================
@@ -118,14 +52,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const downPct = price > 0 ? (down / price) * 100 : 0;
     downPctLabel.textContent = downPct.toFixed(1) + '%';
 
-    const result = amortize(loanAmount, rate, years);
+    const result = computeMortgage(loanAmount, rate, years);
 
     payoutEl.textContent = Currency.format(result.monthlyPayment, { decimals: 0 });
     loanAmtEl.textContent = Currency.format(loanAmount, { decimals: 0 });
     totalInterestEl.textContent = Currency.format(result.totalInterest, { decimals: 0 });
     totalCostEl.textContent = Currency.format(result.totalCost, { decimals: 0 });
 
-    if (chartEl) renderRoofline(chartEl, result.yearly);
+    if (chartEl){
+      renderDonutChart(chartEl, [
+        { label: 'Principal', value: loanAmount, color: 'var(--teal-fill)' },
+        { label: 'Interest', value: result.totalInterest, color: 'var(--brass-fill)' }
+      ], {
+        centerLabel: Currency.format(result.totalCost, { decimals: 0 }),
+        centerSub: 'Total cost'
+      });
+    }
   }
 
   [priceInput, downInput, rateInput, termInput].forEach(el => {

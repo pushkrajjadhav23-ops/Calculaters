@@ -1,11 +1,12 @@
 // ============================================================
 // EMI Calculator (Equated Monthly Installment)
 // Same fixed-rate amortization math as the mortgage calculator,
-// generalized for any loan type, with a Years/Months tenure toggle.
-// Reuses "The Roofline" chart: cumulative principal vs interest.
+// generalized for any loan type, with a Years/Months tenure
+// toggle. "The Split" donut shows principal vs interest share
+// of the total amount repaid.
 // ============================================================
 
-function amortizeLoan(loanAmount, annualRatePct, months){
+function computeEmi(loanAmount, annualRatePct, months){
   const n = Math.max(1, Math.round(months));
   const r = (annualRatePct / 100) / 12;
 
@@ -13,70 +14,10 @@ function amortizeLoan(loanAmount, annualRatePct, months){
     ? loanAmount / n
     : loanAmount * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
 
-  let balance = loanAmount;
-  let cumPrincipal = 0;
-  let cumInterest = 0;
-  const yearly = [{ year: 0, principalCum: 0, interestCum: 0, totalCum: 0 }];
+  const totalPayment = emi * n;
+  const totalInterest = Math.max(totalPayment - loanAmount, 0);
 
-  for (let m = 1; m <= n; m++){
-    const interest = balance * r;
-    let principal = emi - interest;
-    if (m === n) principal = balance;
-    balance = Math.max(0, balance - principal);
-    cumPrincipal += principal;
-    cumInterest += interest;
-
-    if (m % 12 === 0 || m === n){
-      yearly.push({
-        year: Math.ceil(m / 12),
-        principalCum: cumPrincipal,
-        interestCum: cumInterest,
-        totalCum: cumPrincipal + cumInterest,
-        balance
-      });
-    }
-  }
-
-  return { emi, totalInterest: cumInterest, totalPayment: cumPrincipal + cumInterest, yearly };
-}
-
-// ---- Roofline SVG chart (same visual language as mortgage-calculator) ----
-function renderEmiRoofline(svgEl, yearly){
-  const W = 640, H = 240, padL = 44, padR = 16, padT = 16, padB = 28;
-  const innerW = W - padL - padR;
-  const innerH = H - padT - padB;
-
-  const maxYear = yearly[yearly.length - 1].year || 1;
-  const maxTotal = yearly[yearly.length - 1].totalCum || 1;
-
-  const xScale = (year) => padL + (year / maxYear) * innerW;
-  const yScale = (val) => padT + innerH - (val / maxTotal) * innerH;
-  const baseY = padT + innerH;
-
-  const totalPoints = yearly.map(d => `${xScale(d.year)},${yScale(d.totalCum)}`);
-  const principalPoints = yearly.map(d => `${xScale(d.year)},${yScale(d.principalCum)}`);
-
-  const totalPath = `M${padL},${baseY} L${totalPoints.join(' L')} L${xScale(maxYear)},${baseY} Z`;
-  const principalPath = `M${padL},${baseY} L${principalPoints.join(' L')} L${xScale(maxYear)},${baseY} Z`;
-  const ridgeLine = `M${principalPoints.join(' L')}`;
-
-  let grid = '';
-  for (let i = 1; i <= 3; i++){
-    const gy = padT + (innerH / 4) * i;
-    grid += `<line x1="${padL}" y1="${gy}" x2="${W - padR}" y2="${gy}" stroke="var(--line-soft)" stroke-width="1"/>`;
-  }
-
-  svgEl.innerHTML = `
-    <rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>
-    ${grid}
-    <path d="${totalPath}" fill="var(--brass)" fill-opacity="0.55"/>
-    <path d="${principalPath}" fill="var(--teal)" fill-opacity="0.9"/>
-    <path d="${ridgeLine}" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
-    <line x1="${padL}" y1="${baseY}" x2="${W - padR}" y2="${baseY}" stroke="var(--ink-faint)" stroke-width="1"/>
-    <text x="${padL}" y="${H - 6}" font-family="var(--font-mono)" font-size="10" fill="var(--ink-faint)">0</text>
-    <text x="${W - padR}" y="${H - 6}" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--ink-faint)">Yr ${maxYear}</text>
-  `;
-  svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  return { emi, totalInterest, totalPayment };
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -103,14 +44,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const rate = parseFloat(rateInput.value) || 0;
     const months = tenureInMonths();
 
-    const result = amortizeLoan(amount, rate, months);
+    const result = computeEmi(amount, rate, months);
 
     emiEl.textContent = Currency.format(result.emi, { decimals: 0 });
     principalEl.textContent = Currency.format(amount, { decimals: 0 });
     totalInterestEl.textContent = Currency.format(result.totalInterest, { decimals: 0 });
     totalPaymentEl.textContent = Currency.format(result.totalPayment, { decimals: 0 });
 
-    if (chartEl) renderEmiRoofline(chartEl, result.yearly);
+    if (chartEl){
+      renderDonutChart(chartEl, [
+        { label: 'Principal', value: amount, color: 'var(--teal-fill)' },
+        { label: 'Interest', value: result.totalInterest, color: 'var(--brass-fill)' }
+      ], {
+        centerLabel: Currency.format(result.totalPayment, { decimals: 0 }),
+        centerSub: 'Total payment'
+      });
+    }
   }
 
   [amountInput, rateInput, tenureInput].forEach(el => {
@@ -123,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const newUnit = btn.dataset.unit;
       if (newUnit === tenureUnit) return;
-      // convert the displayed number when switching units
       const current = parseFloat(tenureInput.value) || 0;
       tenureInput.value = newUnit === 'months'
         ? Math.round(current * 12)

@@ -148,13 +148,12 @@
 
           <div class="roofline">
             <div class="roofline-head">
-              <span class="rl-title">The Roofline</span>
-              <span class="rl-sub">Cumulative principal vs interest paid</span>
+              <span class="rl-title">The Split</span>
+              <span class="rl-sub">Principal vs interest, total payment</span>
             </div>
-            <svg class="roofline-chart" id="rooflineChart" viewBox="0 0 640 240" role="img" aria-label="Chart of cumulative principal and interest paid over the loan tenure"></svg>
-            <div class="roofline-legend">
-              <span><i class="legend-swatch principal"></i> Principal paid</span>
-              <span><i class="legend-swatch interest"></i> Interest paid</span>
+            <div class="donut-wrap">
+              <svg class="roofline-chart donut" id="rooflineChart" viewBox="0 0 320 320" role="img" aria-label="Donut chart of principal vs interest"></svg>
+              <div class="donut-legend"></div>
             </div>
           </div>
         </div>
@@ -168,7 +167,7 @@
 EMI&nbsp;=&nbsp;P&nbsp;×&nbsp;[r(1+r)<sup>n</sup>]&nbsp;/&nbsp;[(1+r)<sup>n</sup>&nbsp;−&nbsp;1]<br><br>
 P = principal loan amount&nbsp;&nbsp;·&nbsp;&nbsp;r = monthly interest rate (annual rate ÷ 12)&nbsp;&nbsp;·&nbsp;&nbsp;n = number of monthly installments
       </div>
-      <p>The teal region in the Roofline chart above is cumulative principal paid; the brass region is cumulative interest. The ridge line where they meet marks the point where each EMI starts putting more toward principal than interest.</p>
+      <p>The Split chart above shows how your total payment divides between principal (teal) and interest (brass). On a longer or higher-rate loan, that interest slice grows — a quick visual gut-check on how much of what you pay is actually the cost of borrowing.</p>
     </section>
 
     <section class="worked-example">
