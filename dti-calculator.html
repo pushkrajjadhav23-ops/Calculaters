@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debt-to-Income (DTI) Calculator — Front-End & Back-End Ratio | calculaters</title>
+<meta name="description" content="Free DTI calculator showing both your front-end (housing) and back-end (total debt) ratios, with a plain-English read on where you stand for loan approval.">
+<link rel="canonical" href="https://pushkrajjadhav23-ops.github.io/Calculaters/dti-calculator.html">
+
+<meta property="og:title" content="Debt-to-Income (DTI) Calculator — Front-End & Back-End Ratio">
+<meta property="og:description" content="Calculate your front-end and back-end debt-to-income ratios and see where you stand for loan approval.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pushkrajjadhav23-ops.github.io/Calculaters/dti-calculator.html">
+
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="calculator.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is debt-to-income (DTI) ratio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DTI ratio is the percentage of your gross monthly income that goes toward debt payments. Lenders use it to judge how much additional debt you can reasonably take on."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between front-end and back-end DTI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Front-end DTI counts only your housing payment against your income. Back-end DTI counts all monthly debt payments — housing, auto, student loans, credit cards, and other obligations — against your income. Mortgage lenders typically look at both."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a good DTI ratio for a mortgage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most conventional lenders prefer a back-end DTI of 36% or below, with a front-end DTI of 28% or below. Some loan programs allow back-end ratios up to around 43-50% with compensating factors like a strong credit score or larger down payment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I lower my DTI ratio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can lower DTI by paying down existing debt balances, avoiding new credit before a loan application, or increasing your income. Paying off smaller debts entirely (rather than just reducing balances) often helps more, since it removes a whole monthly payment from the calculation."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">calculaters<span class="brand-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="finance.html">Finance</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"></button>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="finance.html">Finance</a> / DTI Calculator
+    </p>
+
+    <section class="tight">
+      <span class="eyebrow">Finance · Loan calculators</span>
+      <h1>Debt-to-Income (DTI) Calculator</h1>
+      <p>See both your front-end and back-end debt-to-income ratios — the numbers lenders actually look at when deciding how much you can borrow.</p>
+    </section>
+
+    <div class="tool">
+      <div class="tool-grid">
+        <div class="tool-inputs">
+
+          <div class="currency-toggle" role="group" aria-label="Currency">
+            <button type="button" data-currency="USD">USD $</button>
+            <button type="button" data-currency="GBP">GBP £</button>
+            <button type="button" data-currency="EUR">EUR €</button>
+            <button type="button" data-currency="INR">INR ₹</button>
+            <button type="button" data-currency="AUD">AUD A$</button>
+            <button type="button" data-currency="CAD">CAD C$</button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dtiIncome">Gross monthly income</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="dtiIncome" value="6000" min="0" step="100">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dtiHousing">Housing payment (rent or mortgage)</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="dtiHousing" value="1500" min="0" step="50">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dtiAuto">Auto loan payment</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="dtiAuto" value="350" min="0" step="25">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dtiStudent">Student loan payment</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="dtiStudent" value="200" min="0" step="25">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dtiCards">Credit card minimum payments</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="dtiCards" value="150" min="0" step="25">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dtiOther">Other debt payments</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="dtiOther" value="0" min="0" step="25">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tool-results">
+          <div class="headline-stat">
+            <div class="stat-label">Back-end DTI (total debt)</div>
+            <div class="stat-value num" id="dtiBackEnd">0%</div>
+          </div>
+          <p class="roofline-note" id="dtiBackNote"></p>
+
+          <div class="stat-row">
+            <span class="stat-label">Front-end DTI (housing only)</span>
+            <span class="stat-value num" id="dtiFrontEnd">0%</span>
+          </div>
+          <p class="roofline-note" id="dtiFrontNote"></p>
+
+          <div class="stat-row interest">
+            <span class="stat-label">Total monthly debt</span>
+            <span class="stat-value num" id="dtiTotalDebt">$0</span>
+          </div>
+          <div class="stat-row principal">
+            <span class="stat-label">Remaining income</span>
+            <span class="stat-value num" id="dtiRemaining">$0</span>
+          </div>
+
+          <div class="roofline">
+            <div class="roofline-head">
+              <span class="rl-title">The Split</span>
+              <span class="rl-sub">Income going to debt vs what's left</span>
+            </div>
+            <div class="donut-wrap">
+              <svg class="roofline-chart donut" id="rooflineChart" viewBox="0 0 320 320" role="img" aria-label="Donut chart of income allocated to debt versus remaining income"></svg>
+              <div class="donut-legend"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>How this is calculated</h2>
+      <p>Both ratios divide monthly obligations by your gross (pre-tax) monthly income. The difference is what counts as "debt" in the numerator.</p>
+      <div class="formula-box">
+Front-end DTI&nbsp;=&nbsp;Housing payment&nbsp;÷&nbsp;Gross monthly income&nbsp;×&nbsp;100<br><br>
+Back-end DTI&nbsp;=&nbsp;(Housing + Auto + Student + Cards + Other)&nbsp;÷&nbsp;Gross monthly income&nbsp;×&nbsp;100
+      </div>
+      <p>The Split chart above shows the same thing visually — how much of your gross income is already spoken for by debt payments, versus what's actually free to save, invest, or spend elsewhere.</p>
+    </section>
+
+    <section class="worked-example">
+      <h2>Worked example</h2>
+      <p>A borrower earning $6,000/month gross, with a $1,500 housing payment, $350 auto loan, $200 student loan, and $150 in credit card minimums:</p>
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="num">Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Gross monthly income</td><td class="num">$6,000</td></tr>
+          <tr><td>Total monthly debt</td><td class="num">$2,200</td></tr>
+          <tr><td>Front-end DTI (housing only)</td><td class="num">25.0%</td></tr>
+          <tr><td>Back-end DTI (all debt)</td><td class="num">36.7%</td></tr>
+        </tbody>
+      </table>
+      <p>At 36.7% back-end, this borrower sits right at the edge of the standard 36% guideline — likely approvable at most conventional lenders, but with limited room for additional debt.</p>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">What is debt-to-income (DTI) ratio?</button>
+          <div class="faq-a"><p>DTI ratio is the percentage of your gross monthly income that goes toward debt payments. Lenders use it to judge how much additional debt you can reasonably take on.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What's the difference between front-end and back-end DTI?</button>
+          <div class="faq-a"><p>Front-end DTI counts only your housing payment against your income. Back-end DTI counts all monthly debt payments — housing, auto, student loans, credit cards, and other obligations — against your income. Mortgage lenders typically look at both.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What is a good DTI ratio for a mortgage?</button>
+          <div class="faq-a"><p>Most conventional lenders prefer a back-end DTI of 36% or below, with a front-end DTI of 28% or below. Some loan programs allow back-end ratios up to around 43-50% with compensating factors like a strong credit score or larger down payment.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">How can I lower my DTI ratio?</button>
+          <div class="faq-a"><p>You can lower DTI by paying down existing debt balances, avoiding new credit before a loan application, or increasing your income. Paying off smaller debts entirely (rather than just reducing balances) often helps more, since it removes a whole monthly payment from the calculation.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Related calculators</h2>
+      <div class="related-grid">
+        <a class="related-card" href="mortgage-calculator.html">
+          <span class="rc-title">Mortgage Calculator</span>
+          <span class="rc-desc">Monthly payment, total interest, and payoff chart.</span>
+        </a>
+        <a class="related-card" href="home-loan-calculator.html">
+          <span class="rc-title">Home Loan Calculator</span>
+          <span class="rc-desc">EMI, processing fee, and an EMI-to-income eligibility check.</span>
+        </a>
+        <a class="related-card" href="extra-payment-calculator.html">
+          <span class="rc-title">Extra Payment Calculator</span>
+          <span class="rc-desc">See how much time and interest extra payments save.</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© <span id="year"></span> calculaters. All calculations are estimates for informational purposes only.</div>
+    <ul class="footer-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="main.js"></script>
+<script src="dti.js"></script>
+</body>
+</html>
