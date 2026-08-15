@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compound Interest Calculator — Savings & Investment Growth | calculaters</title>
+<meta name="description" content="Free compound interest calculator with monthly contributions and selectable compounding frequency. See your final balance, total contributions, and interest earned.">
+<link rel="canonical" href="https://pushkrajjadhav23-ops.github.io/Calculaters/compound-interest-calculator.html">
+
+<meta property="og:title" content="Compound Interest Calculator — Savings & Investment Growth">
+<meta property="og:description" content="See how your savings or investments grow with compound interest and monthly contributions.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pushkrajjadhav23-ops.github.io/Calculaters/compound-interest-calculator.html">
+
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="calculator.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is compound interest?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Compound interest is interest calculated on both the original principal and the interest already earned. Unlike simple interest, which only grows on the original amount, compound interest lets your balance grow on an accelerating curve over time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does compounding frequency really make a difference?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, but usually a modest one. More frequent compounding (daily versus annually) means interest starts earning its own interest sooner, which adds up over long timeframes, though the difference is typically a small percentage of total growth compared to the impact of the rate itself or how long the money is invested."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Rule of 72?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Rule of 72 is a quick way to estimate how long it takes an investment to double: divide 72 by the annual interest rate. At 7% annual growth, for example, money roughly doubles every 72 ÷ 7, or about 10.3 years."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is starting early more important than contributing more?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Time in the market is often the single biggest factor in compound growth, since more compounding periods let interest earn interest on itself longer. Starting a decade earlier with smaller contributions frequently outperforms starting later with larger ones, though contributing more helps at any starting point."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">calculaters<span class="brand-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="finance.html">Finance</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"></button>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="finance.html">Finance</a> / Compound Interest Calculator
+    </p>
+
+    <section class="tight">
+      <span class="eyebrow">Finance · Savings & investing</span>
+      <h1>Compound Interest Calculator</h1>
+      <p>See how an initial amount plus optional monthly contributions grows over time — and how much of your final balance is money you put in versus interest you earned.</p>
+    </section>
+
+    <div class="tool">
+      <div class="tool-grid">
+        <div class="tool-inputs">
+
+          <div class="currency-toggle" role="group" aria-label="Currency">
+            <button type="button" data-currency="USD">USD $</button>
+            <button type="button" data-currency="GBP">GBP £</button>
+            <button type="button" data-currency="EUR">EUR €</button>
+            <button type="button" data-currency="INR">INR ₹</button>
+            <button type="button" data-currency="AUD">AUD A$</button>
+            <button type="button" data-currency="CAD">CAD C$</button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="ciPrincipal">Initial amount</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="ciPrincipal" value="10000" min="0" step="500">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="ciContribution">Monthly contribution</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="ciContribution" value="200" min="0" step="25">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="ciRate">Annual interest rate</label>
+            <div class="field-input-row">
+              <input type="number" id="ciRate" value="7" min="0" max="30" step="0.1">
+              <span class="suffix">%</span>
+            </div>
+            <input type="range" min="0" max="20" step="0.1" value="7"
+                   oninput="document.getElementById('ciRate').value=this.value; document.getElementById('ciRate').dispatchEvent(new Event('input'));">
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="ciYears">Time period</label>
+            <div class="field-input-row">
+              <input type="number" id="ciYears" value="20" min="1" max="60" step="1">
+              <span class="suffix">years</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Compounding frequency</label>
+            <div class="compounding-toggle" role="group" aria-label="Compounding frequency">
+              <button type="button" data-periods="1">Annually</button>
+              <button type="button" data-periods="4">Quarterly</button>
+              <button type="button" data-periods="12" class="active">Monthly</button>
+              <button type="button" data-periods="365">Daily</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tool-results">
+          <div class="headline-stat">
+            <div class="stat-label">Final balance</div>
+            <div class="stat-value num" id="ciBalanceOut">$0</div>
+          </div>
+
+          <div class="stat-row principal">
+            <span class="stat-label">Total contributions</span>
+            <span class="stat-value num" id="ciContributionsOut">$0</span>
+          </div>
+          <div class="stat-row interest">
+            <span class="stat-label">Interest earned</span>
+            <span class="stat-value num" id="ciInterestOut">$0</span>
+          </div>
+
+          <div class="roofline">
+            <div class="roofline-head">
+              <span class="rl-title">The Split</span>
+              <span class="rl-sub">Contributions vs interest earned</span>
+            </div>
+            <div class="donut-wrap">
+              <svg class="roofline-chart donut" id="rooflineChart" viewBox="0 0 320 320" role="img" aria-label="Donut chart of total contributions versus interest earned"></svg>
+              <div class="donut-legend"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>How this is calculated</h2>
+      <p>The nominal annual rate is converted to an effective monthly rate based on your chosen compounding frequency, then applied month by month alongside your recurring contribution.</p>
+      <div class="formula-box">
+Effective monthly rate&nbsp;=&nbsp;(1&nbsp;+&nbsp;r/n)<sup>n/12</sup>&nbsp;−&nbsp;1<br><br>
+r = annual interest rate&nbsp;&nbsp;·&nbsp;&nbsp;n = compounding periods per year<br><br>
+Each month: Balance&nbsp;=&nbsp;Balance&nbsp;×&nbsp;(1&nbsp;+&nbsp;effective monthly rate)&nbsp;+&nbsp;Monthly contribution
+      </div>
+      <p>The Split chart above shows the same result visually — how much of your final balance is money you actually put in (teal) versus growth from compounding (brass).</p>
+    </section>
+
+    <section class="worked-example">
+      <h2>Worked example</h2>
+      <p>A $10,000 initial deposit, $200 monthly contribution, at 7% annual interest compounded monthly, over 20 years:</p>
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="num">Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Total contributions (initial + monthly)</td><td class="num">$58,000</td></tr>
+          <tr><td>Interest earned</td><td class="num">≈ $86,573</td></tr>
+          <tr><td>Final balance</td><td class="num">≈ $144,573</td></tr>
+        </tbody>
+      </table>
+      <p>Interest earned outpaces total contributions here — a reminder of why starting early matters: most of this balance came from growth, not from money put in directly.</p>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">What is compound interest?</button>
+          <div class="faq-a"><p>Compound interest is interest calculated on both the original principal and the interest already earned. Unlike simple interest, which only grows on the original amount, compound interest lets your balance grow on an accelerating curve over time.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Does compounding frequency really make a difference?</button>
+          <div class="faq-a"><p>Yes, but usually a modest one. More frequent compounding (daily versus annually) means interest starts earning its own interest sooner, which adds up over long timeframes, though the difference is typically a small percentage of total growth compared to the impact of the rate itself or how long the money is invested.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What is the Rule of 72?</button>
+          <div class="faq-a"><p>The Rule of 72 is a quick way to estimate how long it takes an investment to double: divide 72 by the annual interest rate. At 7% annual growth, for example, money roughly doubles every 72 ÷ 7, or about 10.3 years.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is starting early more important than contributing more?</button>
+          <div class="faq-a"><p>Time in the market is often the single biggest factor in compound growth, since more compounding periods let interest earn interest on itself longer. Starting a decade earlier with smaller contributions frequently outperforms starting later with larger ones, though contributing more helps at any starting point.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Related calculators</h2>
+      <div class="related-grid">
+        <a class="related-card" href="mortgage-calculator.html">
+          <span class="rc-title">Mortgage Calculator</span>
+          <span class="rc-desc">Monthly payment, total interest, and payoff chart.</span>
+        </a>
+        <a class="related-card" href="extra-payment-calculator.html">
+          <span class="rc-title">Extra Payment Calculator</span>
+          <span class="rc-desc">See how much time and interest extra payments save.</span>
+        </a>
+        <a class="related-card" href="dti-calculator.html">
+          <span class="rc-title">Debt-to-Income (DTI) Calculator</span>
+          <span class="rc-desc">Front-end and back-end ratios lenders check for approval.</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© <span id="year"></span> calculaters. All calculations are estimates for informational purposes only.</div>
+    <ul class="footer-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="main.js"></script>
+<script src="compound-interest.js"></script>
+</body>
+</html>

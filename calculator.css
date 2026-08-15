@@ -74,6 +74,19 @@ input[type="range"]{
   background:var(--ink); color:#fff; border-color:var(--ink);
 }
 
+.compounding-toggle{
+  display:flex; gap:6px; margin-top:4px;
+  flex-wrap:wrap;
+}
+.compounding-toggle button{
+  font-family:var(--font-mono); font-size:.78rem;
+  border:1px solid var(--line); background:var(--paper); color:var(--ink-soft);
+  padding:5px 10px; border-radius:999px; cursor:pointer;
+}
+.compounding-toggle button.active{
+  background:var(--ink); color:#fff; border-color:var(--ink);
+}
+
 /* ---------- results side ---------- */
 .tool-results{
   padding:32px;
