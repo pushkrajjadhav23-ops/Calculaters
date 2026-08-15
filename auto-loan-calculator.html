@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Loan Calculator — Payment, Trade-In & Sales Tax | calculaters</title>
+<meta name="description" content="Free auto loan calculator that accounts for trade-in value and sales tax. Get your true monthly payment, amount financed, and total interest.">
+<link rel="canonical" href="https://pushkrajjadhav23-ops.github.io/Calculaters/auto-loan-calculator.html">
+
+<meta property="og:title" content="Auto Loan Calculator — Payment, Trade-In & Sales Tax">
+<meta property="og:description" content="Calculate your real auto loan payment including trade-in value and sales tax.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pushkrajjadhav23-ops.github.io/Calculaters/auto-loan-calculator.html">
+
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="calculator.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does trade-in value reduce sales tax on a car purchase?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In most US states, yes — sales tax is calculated on the price after subtracting your trade-in value, not the full purchase price. This calculator follows that common convention, though a few states tax the full price regardless of trade-in, so it's worth confirming your state's specific rule."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I finance the sales tax or pay it upfront?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rolling sales tax into the loan spreads the cost out but means paying interest on it over the loan term. Paying it upfront costs more at signing but saves on that added interest — whichever fits your cash flow better is a reasonable choice."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a shorter or longer auto loan term better?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A shorter term means higher monthly payments but significantly less total interest paid, and you build equity faster relative to the car's depreciation. A longer term lowers the monthly payment but usually means paying meaningfully more in interest and being underwater on the loan for longer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is 0% dealer financing always better than a cash rebate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not necessarily. A cash rebate reduces the price you finance, which can be worth more than a 0% rate if the rebate is large enough or the loan term is short — run both scenarios through a calculator like this one to compare the actual total cost of each option."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="index.html">calculaters<span class="brand-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="finance.html">Finance</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"></button>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="finance.html">Finance</a> / Auto Loan Calculator
+    </p>
+
+    <section class="tight">
+      <span class="eyebrow">Finance · Loan calculators</span>
+      <h1>Auto Loan Calculator</h1>
+      <p>Get your real monthly payment — including trade-in value and sales tax, not just the sticker price.</p>
+    </section>
+
+    <div class="tool">
+      <div class="tool-grid">
+        <div class="tool-inputs">
+
+          <div class="currency-toggle" role="group" aria-label="Currency">
+            <button type="button" data-currency="USD">USD $</button>
+            <button type="button" data-currency="GBP">GBP £</button>
+            <button type="button" data-currency="EUR">EUR €</button>
+            <button type="button" data-currency="INR">INR ₹</button>
+            <button type="button" data-currency="AUD">AUD A$</button>
+            <button type="button" data-currency="CAD">CAD C$</button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="alPrice">Vehicle price</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="alPrice" value="35000" min="0" step="500">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="alDown">Down payment</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="alDown" value="3000" min="0" step="500">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="alTradeIn">Trade-in value</label>
+            <div class="field-input-row">
+              <span class="prefix">$</span>
+              <input type="number" id="alTradeIn" value="5000" min="0" step="500">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="alTax">Sales tax rate</label>
+            <div class="field-input-row">
+              <input type="number" id="alTax" value="7" min="0" max="15" step="0.1">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="alRate">Interest rate (APR)</label>
+            <div class="field-input-row">
+              <input type="number" id="alRate" value="6.5" min="0" max="25" step="0.05">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="alTerm">Loan term</label>
+            <div class="field-input-row">
+              <input type="number" id="alTerm" value="60" min="12" max="96" step="1">
+              <span class="suffix">months</span>
+            </div>
+            <div class="compounding-toggle term-toggle" role="group" aria-label="Common loan terms">
+              <button type="button" data-months="36">36 mo</button>
+              <button type="button" data-months="48">48 mo</button>
+              <button type="button" data-months="60" class="active">60 mo</button>
+              <button type="button" data-months="72">72 mo</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tool-results">
+          <div class="headline-stat">
+            <div class="stat-label">Monthly payment</div>
+            <div class="stat-value num" id="alPaymentOut">$0</div>
+          </div>
+
+          <div class="stat-row">
+            <span class="stat-label">Amount financed</span>
+            <span class="stat-value num" id="alFinancedOut">$0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Sales tax</span>
+            <span class="stat-value num" id="alTaxOut">$0</span>
+          </div>
+          <div class="stat-row interest">
+            <span class="stat-label">Total interest</span>
+            <span class="stat-value num" id="alInterestOut">$0</span>
+          </div>
+          <div class="stat-row principal">
+            <span class="stat-label">Total payment</span>
+            <span class="stat-value num" id="alTotalOut">$0</span>
+          </div>
+
+          <div class="roofline">
+            <div class="roofline-head">
+              <span class="rl-title">The Split</span>
+              <span class="rl-sub">Principal vs interest, total repaid</span>
+            </div>
+            <div class="donut-wrap">
+              <svg class="roofline-chart donut" id="rooflineChart" viewBox="0 0 320 320" role="img" aria-label="Donut chart of principal versus interest for the auto loan"></svg>
+              <div class="donut-legend"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>How this is calculated</h2>
+      <p>The amount you actually finance isn't just the car price — it accounts for your down payment, trade-in credit, and sales tax on top.</p>
+      <div class="formula-box">
+Sales tax&nbsp;=&nbsp;(Price&nbsp;−&nbsp;Trade-in)&nbsp;×&nbsp;Tax rate<br><br>
+Amount financed&nbsp;=&nbsp;Price&nbsp;−&nbsp;Down payment&nbsp;−&nbsp;Trade-in&nbsp;+&nbsp;Sales tax<br><br>
+Monthly payment&nbsp;=&nbsp;Amount financed&nbsp;×&nbsp;[r(1+r)<sup>n</sup>]&nbsp;/&nbsp;[(1+r)<sup>n</sup>&nbsp;−&nbsp;1]
+      </div>
+      <p>This follows the common convention where trade-in value reduces the taxable amount — most US states work this way, though it's worth double-checking your state's specific rule.</p>
+    </section>
+
+    <section class="worked-example">
+      <h2>Worked example</h2>
+      <p>A $35,000 vehicle, $3,000 down, $5,000 trade-in, 7% sales tax, 6.5% APR, over a 60-month term:</p>
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="num">Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sales tax (on price minus trade-in)</td><td class="num">$2,100</td></tr>
+          <tr><td>Amount financed</td><td class="num">$29,100</td></tr>
+          <tr><td>Monthly payment</td><td class="num">≈ $569</td></tr>
+          <tr><td>Total interest over 5 years</td><td class="num">≈ $5,062</td></tr>
+          <tr><td>Total payment</td><td class="num">≈ $34,162</td></tr>
+        </tbody>
+      </table>
+      <p>The trade-in does double duty here — it lowers both the amount financed and the taxable price, which is why it's worth negotiating trade-in value seriously rather than treating it as an afterthought.</p>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">Does trade-in value reduce sales tax on a car purchase?</button>
+          <div class="faq-a"><p>In most US states, yes — sales tax is calculated on the price after subtracting your trade-in value, not the full purchase price. This calculator follows that common convention, though a few states tax the full price regardless of trade-in, so it's worth confirming your state's specific rule.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Should I finance the sales tax or pay it upfront?</button>
+          <div class="faq-a"><p>Rolling sales tax into the loan spreads the cost out but means paying interest on it over the loan term. Paying it upfront costs more at signing but saves on that added interest — whichever fits your cash flow better is a reasonable choice.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is a shorter or longer auto loan term better?</button>
+          <div class="faq-a"><p>A shorter term means higher monthly payments but significantly less total interest paid, and you build equity faster relative to the car's depreciation. A longer term lowers the monthly payment but usually means paying meaningfully more in interest and being underwater on the loan for longer.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is 0% dealer financing always better than a cash rebate?</button>
+          <div class="faq-a"><p>Not necessarily. A cash rebate reduces the price you finance, which can be worth more than a 0% rate if the rebate is large enough or the loan term is short — run both scenarios through a calculator like this one to compare the actual total cost of each option.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Related calculators</h2>
+      <div class="related-grid">
+        <a class="related-card" href="emi-calculator.html">
+          <span class="rc-title">EMI Calculator</span>
+          <span class="rc-desc">Monthly EMI, total interest, and payment breakdown for any loan.</span>
+        </a>
+        <a class="related-card" href="dti-calculator.html">
+          <span class="rc-title">Debt-to-Income (DTI) Calculator</span>
+          <span class="rc-desc">Front-end and back-end ratios lenders check for approval.</span>
+        </a>
+        <a class="related-card" href="extra-payment-calculator.html">
+          <span class="rc-title">Extra Payment Calculator</span>
+          <span class="rc-desc">See how much time and interest extra payments save.</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© <span id="year"></span> calculaters. All calculations are estimates for informational purposes only.</div>
+    <ul class="footer-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="main.js"></script>
+<script src="auto-loan.js"></script>
+</body>
+</html>
