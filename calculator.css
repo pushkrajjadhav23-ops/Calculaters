@@ -51,37 +51,41 @@
   align-self:stretch; display:flex; align-items:center;
 }
 .field-input-row input[type="number"]{
-  border:none; background:none; padding:11px 10px; font-size:1rem;
+  border:none; background:none; padding:13px 10px; font-size:1rem;
   width:100%; color:var(--ink);
+  min-height:44px;
 }
 .field-input-row input[type="number"]:focus{ outline:none; }
 .field-input-row:focus-within{ border-color:var(--teal); }
 
 input[type="range"]{
   width:100%; margin-top:10px; accent-color:var(--teal); cursor:pointer;
+  height:28px; /* larger hit area for touch, track stays thin via accent-color rendering */
 }
 
 .currency-toggle{
-  display:flex; gap:6px; margin-bottom:24px;
+  display:flex; gap:8px; margin-bottom:24px;
   flex-wrap:wrap;
 }
 .currency-toggle button{
   font-family:var(--font-mono); font-size:.78rem;
   border:1px solid var(--line); background:var(--paper); color:var(--ink-soft);
-  padding:5px 10px; border-radius:999px; cursor:pointer;
+  padding:9px 14px; border-radius:999px; cursor:pointer;
+  min-height:38px;
 }
 .currency-toggle button.active{
   background:var(--ink); color:#fff; border-color:var(--ink);
 }
 
 .compounding-toggle{
-  display:flex; gap:6px; margin-top:4px;
+  display:flex; gap:8px; margin-top:4px;
   flex-wrap:wrap;
 }
 .compounding-toggle button{
   font-family:var(--font-mono); font-size:.78rem;
   border:1px solid var(--line); background:var(--paper); color:var(--ink-soft);
-  padding:5px 10px; border-radius:999px; cursor:pointer;
+  padding:9px 14px; border-radius:999px; cursor:pointer;
+  min-height:38px;
 }
 .compounding-toggle button.active{
   background:var(--ink); color:#fff; border-color:var(--ink);
@@ -185,8 +189,12 @@ input[type="range"]{
   margin:16px 0;
 }
 
+.worked-example{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
 .worked-example table{
-  width:100%; border-collapse:collapse; margin:16px 0; font-size:.92rem;
+  width:100%; min-width:420px; border-collapse:collapse; margin:16px 0; font-size:.92rem;
 }
 .worked-example th, .worked-example td{
   text-align:left; padding:10px 12px; border-bottom:1px solid var(--line-soft);
@@ -196,3 +204,32 @@ input[type="range"]{
   letter-spacing:.05em; color:var(--ink-faint); font-weight:600;
 }
 .worked-example td.num{ text-align:right; }
+
+/* =========================================================
+   Mobile — calculator widget
+   ========================================================= */
+@media (max-width: 600px){
+  .tool{ margin:20px 0 8px; border-radius:8px; }
+
+  .tool-inputs{ padding:20px; }
+  .tool-results{ padding:20px; }
+
+  .field{ margin-bottom:18px; }
+
+  .headline-stat .stat-value{ font-size:2.1rem; }
+
+  .stat-row{ font-size:.9rem; padding:11px 0; }
+  .stat-row .stat-value{ font-size:1rem; }
+
+  .roofline-head{ flex-direction:column; align-items:flex-start; gap:2px; margin-bottom:12px; }
+
+  .donut-wrap{ padding:16px; gap:18px; }
+  .roofline-chart.donut{ width:140px; height:140px; }
+  .donut-legend{ min-width:140px; gap:12px; }
+  .donut-legend-value{ font-size:1rem; }
+
+  .formula-box{ padding:14px 16px; font-size:.85rem; }
+
+  .worked-example table{ font-size:.85rem; }
+  .worked-example th, .worked-example td{ padding:8px 10px; }
+}

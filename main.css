@@ -129,7 +129,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .nav-toggle{
   display:none;
   background:none; border:1px solid var(--line); border-radius:var(--radius-sm);
-  width:40px; height:40px; cursor:pointer;
+  width:44px; height:44px; cursor:pointer;
 }
 .nav-toggle span, .nav-toggle::before, .nav-toggle::after{
   content:''; display:block; height:2px; width:18px; background:var(--ink);
@@ -224,10 +224,13 @@ section.tight{ padding:28px 0; }
   display:flex; align-items:center; justify-content:space-between;
   padding:18px 2px; font-family:var(--font-body); font-weight:600; font-size:1rem;
   color:var(--ink);
+  gap:12px;
+  min-height:44px;
 }
 .faq-q::after{
   content:'+'; font-family:var(--font-mono); font-size:1.2rem; color:var(--brass);
   transition:transform .15s ease;
+  flex-shrink:0;
 }
 .faq-item.open .faq-q::after{ transform:rotate(45deg); }
 .faq-a{
@@ -235,3 +238,26 @@ section.tight{ padding:28px 0; }
   color:var(--ink-soft); font-size:.95rem;
 }
 .faq-item.open .faq-a{ max-height:400px; padding-bottom:18px; }
+
+/* =========================================================
+   Mobile — tighter spacing, bigger tap targets, no overflow
+   ========================================================= */
+@media (max-width: 600px){
+  .container{ padding:0 16px; }
+
+  section{ padding:32px 0; }
+  section.tight{ padding:22px 0; }
+
+  h1{ font-size:1.7rem; }
+  h2{ font-size:1.35rem; }
+
+  .nav{ padding:12px 16px; }
+  .brand{ font-size:1.15rem; }
+
+  .site-footer{ margin-top:56px; padding:28px 0; }
+  .footer-grid{ gap:18px; }
+
+  /* every tap target site-wide gets thumb-friendly sizing on touch screens */
+  .faq-q{ padding:16px 2px; }
+}
+
